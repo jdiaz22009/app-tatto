@@ -1,6 +1,40 @@
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content class="content">
+  <section class="section-register">
+    <form [formGroup]="registerForm">
+      <ion-list class="list-item">
+        <ion-item class="item-form">
+          <ion-label floating>Nombre</ion-label>
+          <ion-input formControlName="name"  type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="item-form">
+          <ion-label floating>Apellido</ion-label>
+          <ion-input formControlName="last_name" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="item-form">
+          <ion-label floating>Correo electronico</ion-label>
+          <ion-input formControlName="email"  type="email"></ion-input>
+        </ion-item>
+
+        <div class="requiered" *ngIf="!registerForm.controls.email.valid && registerForm.controls.email.dirty">
+          <span>Por favor ingrese un correo electronico valido</span>
+        </div>
+
+        <ion-item class="item-form">
+          <ion-label floating>Contraseña</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+
+        <ion-item class="item-form">
+          <ion-label floating>Repita la contraseña</ion-label>
+          <ion-input formControlName="repetPassword" type="password"></ion-input>
+        </ion-item>
+      </ion-list>
+    </form>
+  </section>
 </ion-content>
+
+<ion-footer class="ion-footer">
+  <button class="btn" ion-button color="dark" (click)="UserValid()" [disabled]="!registerForm.valid" full>Registrate</button>
+</ion-footer>

@@ -1,3 +1,28 @@
 page-register{
-  
+  .content{
+    background: url('../../../assets/imgs/auth.jpg') no-repeat;
+  }
+
+  .content .section-register{
+    width: 95%;
+    margin-left: 3%;
+    margin-top: 35%;
+  }
+
+  .content .section-register .item-form{
+    height: 70%;
+    border: #000000 solid;
+    border-radius: 8px;
+  }
+
+  .ion-footer .btn{
+    height: 49px;
+    font-size: 3vh;
+  }
+
+  .requiered{
+    color: red;
+    margin-left: 5%;
+  }
+
 }

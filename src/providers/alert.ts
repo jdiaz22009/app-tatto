@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 
 @Injectable()
-
 export class AlertProvider {
+  
   constructor(public alertctrl: AlertController) {
   }
 
-  Alert(title, message, nameButton) {
+  showAlert(title, message, nameButton) {
     const alert = this.alertctrl.create({
       title: title,
       subTitle: message,
@@ -16,7 +16,7 @@ export class AlertProvider {
     alert.present()
   }
 
-  AlertConfirm(title,message,ok,cancel){
+  showAlertConfirm(title,message,ok,cancel){
     return new Promise(resolve =>{
       const confirm = this.alertctrl.create({
         title: title,
