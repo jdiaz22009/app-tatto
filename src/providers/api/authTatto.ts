@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { CONFIGURL } from '../configUrl';
 
-import { RegisterTatto } from '@models/auth';
-
 import { ApiRestClientProvider } from './apiRest';
-import { StorageDB } from '@providers/storageDB';
+import { StorageDB } from '../storageDB';
 
 @Injectable()
 export class authTattoProvider{
@@ -20,10 +18,15 @@ export class authTattoProvider{
   ){
   }
 
-  register(register:RegisterTatto){
+  async register(register){
     const url = this.apiUrl + this.postRegisterPath
     const header = { 'content-type': 'application/json' }
-    console.log(register)
+    try {
+      return await this.apiRest.requestHttp('POST',url,register,header)
+    } catch (e) {
+      throw e
+    }
+
 
   }
 }

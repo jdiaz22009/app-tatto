@@ -3,7 +3,7 @@ const dev ={
 
   api:{
     //url: 'http://192.168.0.7:3000/api/',
-    url: 'http://192.168.0.6:3000/api/',
+    url: 'http://192.168.0.7:3000/api/',
     tatto: {
       POST:{
         auth: 'v1/auth/login',

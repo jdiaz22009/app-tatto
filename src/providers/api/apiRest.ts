@@ -26,7 +26,7 @@ export class ApiRestClientProvider {
     const options = {
       method: method,
       headers: headers,
-      data: params,
+      data: JSON.stringify(params),
       url
     }
     try {
