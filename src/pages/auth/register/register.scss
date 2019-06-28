@@ -25,4 +25,9 @@ page-register{
     margin-left: 5%;
   }
 
+  ion-header ion-icon.back-button-icon.icon {
+    color: map-get($colors, light);
+}
+
+
 }
