@@ -1,0 +1,27 @@
+<ion-content class="content">
+  <section class="section-login">
+    <form [formGroup]="loginForm">
+      <ion-list>
+        <ion-item class="item-form">
+          <ion-label floating>Alias o correo electronico</ion-label>
+          <ion-input formControlName="email" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="item-form">
+          <ion-label floating>Contraseña</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+      </ion-list>
+    </form>
+
+    <div class="account">
+      <ion-label class="label-item">Ya tienes una cuenta?</ion-label>
+      <ion-label class="label-item">Crea una cuenta  &nbsp; <strong (click)="goRegister()"> Ahora mismo</strong></ion-label>
+    </div>
+  </section>
+
+</ion-content>
+
+<ion-footer class="ion-footer">
+    <button class="btn" ion-button color="dark"  [disabled]="!loginForm.valid" full>Entrar</button>
+  </ion-footer>

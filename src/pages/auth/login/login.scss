@@ -1,0 +1,33 @@
+page-login {
+  .content {
+    background: url("../../../assets/imgs/auth.jpg") no-repeat;
+  }
+}
+
+.content .section-login {
+  width: 95%;
+  margin-left: 3%;
+  margin-top: 70%;
+}
+
+.content .section-login .item-form {
+  height: 80%;
+  border: #000000 solid;
+  border-radius: 8px;
+}
+
+.account > .label-item {
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.account .label-item{
+  font-size: 3vh;
+}
+.ion-footer .btn {
+  margin-top: -22%;
+  height: 49px;
+  font-size: 3vh;
+}
