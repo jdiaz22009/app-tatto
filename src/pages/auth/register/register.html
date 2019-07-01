@@ -1,16 +1,14 @@
 <ion-header>
-    <ion-navbar color="dark">
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar color="dark"> </ion-navbar>
+</ion-header>
 <ion-content class="content">
-  <section class="section-register">
+  <section class="section-register" *ngIf="show === 1">
     <form [formGroup]="registerForm">
       <ion-list class="list-item">
         <ion-item class="item-form">
           <ion-label floating>Nombre</ion-label>
-          <ion-input formControlName="name"  type="text"></ion-input>
+          <ion-input formControlName="name" type="text"></ion-input>
         </ion-item>
-
         <ion-item class="item-form">
           <ion-label floating>Apellido</ion-label>
           <ion-input formControlName="last_name" type="text"></ion-input>
@@ -18,11 +16,15 @@
 
         <ion-item class="item-form">
           <ion-label floating>Correo electronico</ion-label>
-          <ion-input formControlName="email"  type="email"></ion-input>
+          <ion-input
+            formControlName="email"
+            type="email"
+            (ionChange)="validEmail($event)"
+          ></ion-input>
         </ion-item>
 
-        <div class="requiered" *ngIf="!registerForm.controls.email.valid && registerForm.controls.email.dirty">
-          <span>Por favor ingrese un correo electronico valido</span>
+        <div class="requiered" *ngIf="showMessage === 1 || showMessage === 2">
+          <span>{{ message }}</span>
         </div>
 
         <ion-item class="item-form">
@@ -32,7 +34,40 @@
 
         <ion-item class="item-form">
           <ion-label floating>Repita la contraseña</ion-label>
-          <ion-input formControlName="repetPassword" type="password"></ion-input>
+          <ion-input
+            formControlName="repetPassword"
+            type="password"
+          ></ion-input>
+        </ion-item>
+      </ion-list>
+    </form>
+  </section>
+
+  <section *ngIf="show === 2" class="section-register">
+    <form [formGroup]="registerFinish">
+      <ion-list class="list-item">
+        <ion-item class="item-form">
+          <ion-label floating>Alias</ion-label>
+          <ion-input formControlName="alias" type="text"></ion-input>
+        </ion-item>
+        <ion-item class="item-form">
+          <ion-label floating>Años Experiencia</ion-label>
+          <ion-input formControlName="ageExp" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item class="item-form">
+          <ion-label floating>Celular</ion-label>
+          <ion-input formControlName="phone" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item class="item-form">
+          <ion-label floating>url facebook</ion-label>
+          <ion-input formControlName="urlFacebook" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item class="item-form">
+          <ion-label floating>url instagram </ion-label>
+          <ion-input formControlName="urlInstagram" type="text"></ion-input>
         </ion-item>
       </ion-list>
     </form>
@@ -40,5 +75,28 @@
 </ion-content>
 
 <ion-footer class="ion-footer">
-  <button class="btn" ion-button color="dark" (click)="userValid()" [disabled]="!registerForm.valid" full>CREAR CUENTA</button>
+  <div *ngIf="show === 1">
+    <button
+      class="btn"
+      ion-button
+      color="dark"
+      (click)="userValid()"
+      [disabled]="!registerForm.valid"
+      full
+    >
+      CREAR CUENTA
+    </button>
+  </div>
+  <div *ngIf="show === 2">
+    <button
+      class="btn"
+      ion-button
+      color="dark"
+      (click)="finish()"
+      [disabled]="!registerFinish.valid"
+      full
+    >
+      TERMINAR
+    </button>
+  </div>
 </ion-footer>

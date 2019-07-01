@@ -30,4 +30,6 @@ export class LoginPage {
   goRegister(){
     this.navctrl.push('RegisterPage')
   }
+
+  
 }

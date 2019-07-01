@@ -6,6 +6,9 @@
           <ion-label floating>Alias o correo electronico</ion-label>
           <ion-input formControlName="email" type="text"></ion-input>
         </ion-item>
+        <div class="requiered" *ngIf="!loginForm.controls.email.valid && loginForm.controls.email.dirty">
+          <span>Por favor ingrese un correo electronico valido</span>
+        </div>
 
         <ion-item class="item-form">
           <ion-label floating>Contraseña</ion-label>

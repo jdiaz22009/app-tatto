@@ -22,11 +22,11 @@ export class ApiRestClientProvider {
   }
 
   async requestHttp(method,url,params,headers){
-    console.log(url + ' method: ' + method + ' params: ' + params + 'headers' + JSON.stringify(headers))
+    console.log(url + ' method: ' + method + ' params: ' + JSON.stringify(params) + 'headers' + headers)
     const options = {
       method: method,
       headers: headers,
-      data: JSON.stringify(params),
+      data: params,
       url
     }
     try {
