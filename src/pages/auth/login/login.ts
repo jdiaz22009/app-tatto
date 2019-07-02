@@ -31,5 +31,4 @@ export class LoginPage {
     this.navctrl.push('RegisterPage')
   }
 
-  
 }
