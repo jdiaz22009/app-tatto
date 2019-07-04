@@ -4,10 +4,10 @@
       <ion-list>
         <ion-item class="item-form">
           <ion-label floating>Correo electronico</ion-label>
-          <ion-input formControlName="email" type="text"></ion-input>
+          <ion-input formControlName="email" (ionChange)="ionChange($event)" type="text"></ion-input>
         </ion-item>
-        <div class="requiered" *ngIf="!loginForm.controls.email.valid && loginForm.controls.email.dirty">
-          <span>Por favor ingrese un correo electronico valido</span>
+        <div class="requiered" *ngIf="showMessage == 1">
+          <span>{{message}}</span>
         </div>
 
         <ion-item class="item-form">
@@ -26,5 +26,5 @@
 </ion-content>
 
 <ion-footer class="ion-footer">
-    <button class="btn" ion-button color="dark"  [disabled]="!loginForm.valid" full>Entrar</button>
+    <button class="btn" ion-button color="dark"  (click)="login()" [disabled]="!loginForm.valid" full>Entrar</button>
   </ion-footer>
