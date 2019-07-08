@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams ,MenuController} from "ionic-angular";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
@@ -23,8 +23,10 @@ export class LoginPage {
     public navParams: NavParams,
     public apiRest: authTattoProvider,
     public alertP: AlertProvider,
+    public menuCtrl: MenuController,
     private formBuilder: FormBuilder
   ) {
+    this.menuCtrl.swipeEnable(true)
     this.loginForm = this.formBuilder.group({
       email: [
         "",

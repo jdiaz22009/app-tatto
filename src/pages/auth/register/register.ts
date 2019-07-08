@@ -4,7 +4,8 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  LoadingController
+  LoadingController,
+  MenuController
 } from "ionic-angular";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -35,8 +36,10 @@ export class RegisterPage {
     public alertCtrl: AlertProvider,
     public loadingCtrl: LoadingController,
     public apiRest: authTattoProvider,
+    public menuCtrl:MenuController,
     private formbuilder: FormBuilder
   ) {
+    this.menuCtrl.swipeEnable(false)
     this.registerForm = this.formbuilder.group({
       name: ["", Validators.required],
       last_name: ["", Validators.required],

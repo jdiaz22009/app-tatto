@@ -7,8 +7,6 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-
-
 //? Providers
 import { PROVIDERS_MODULE } from '../providers/index';
 import { API_MODULE } from '../providers/api/index'
@@ -16,7 +14,7 @@ import { API_MODULE } from '../providers/api/index'
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +24,7 @@ import { API_MODULE } from '../providers/api/index'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
   ],
   providers: [
     StatusBar,

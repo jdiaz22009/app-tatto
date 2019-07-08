@@ -1,1 +1,21 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar color="dark">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-card text-center class="hide-card">
+      <img src="http://placehold.it/300x200" class="custom-avatar" />
+    </ion-card>
+    <button ion-fab color="dark" class="btnProfile">
+        <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+      </button>
+    <ion-list class="listProfile">
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon [name]="p.icon" item-left></ion-icon> {{ p.title }}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
