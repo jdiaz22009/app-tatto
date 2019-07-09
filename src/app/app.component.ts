@@ -8,7 +8,7 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 export class MyApp {
   rootPage: any = "LoginPage";
   @ViewChild(Nav) nav: Nav;
-  public pages: Array<{ title: string; icon: string; component: any }>;
+  public pages: Array<{ title: string, iconios: string, icon: string; component: any }>;
 
   constructor(
     platform: Platform,
@@ -29,16 +29,25 @@ export class MyApp {
       {
         title: 'Crear orden',
         icon: 'md-folder',
+        iconios: 'ios-folder',
         component: 'LoginPage'
       },
       {
         title: 'Listar orden',
         icon: 'md-list-box',
+        iconios: 'ios-list-box',
+        component: 'LoginPage'
+      },
+      {
+        title: 'Mi Perfil',
+        icon: 'md-contact',
+        iconios: 'ios-contact',
         component: 'LoginPage'
       },
       {
         title: 'Mi galeria',
         icon: 'md-images',
+        iconios: 'ios-images',
         component: 'LoginPage'
       },
       // {
@@ -49,6 +58,7 @@ export class MyApp {
       {
         title: 'Salir',
         icon: 'md-log-out',
+        iconios: 'ios-log-out',
         component: 'LoginPage'
       }
     ];
