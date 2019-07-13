@@ -9,7 +9,7 @@ export class MyApp {
   rootPage: any = "LoginPage";
   @ViewChild(Nav) nav: Nav;
   public pages: Array<{ title: string, iconios: string, icon: string; component: any }>;
-
+  defaultimg:string = '../assets/imgs/photoDefautlProfile.png'
   constructor(
     platform: Platform,
     statusBar: StatusBar,

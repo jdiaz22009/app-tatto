@@ -8,19 +8,20 @@
     <div>
       <ion-grid>
         <ion-row>
-          <ion-col  col-6 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+          <ion-col col-6 col-sm-9 col-md-6 col-lg-4 col-xl-3>
             <ion-card text-center class="hide-card">
-              <img src="http://placehold.it/300x200" class="custom-avatar" />
+              <img [src]='defaultimg' class="custom-avatar" />
             </ion-card>
           </ion-col>
           <ion-col class="profile" col-6 col-sm-9 col-md-6 col-lg-4 col-xl-3>
-            <ion-label>Juan David Diaz</ion-label>
-            <ion-label>Editar</ion-label>
+            <div class="label-ion">
+              <ion-label>Juan David Diaz</ion-label>
+              <ion-label class="labelE">Editar</ion-label>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
-
     <ion-list class="listProfile">
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon [md]="p.icon" [ios]="p.iconios" item-left></ion-icon>
