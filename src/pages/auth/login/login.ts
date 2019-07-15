@@ -1,11 +1,18 @@
 import { Component } from "@angular/core";
 
-import { IonicPage, NavController, NavParams ,MenuController} from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  MenuController
+} from "ionic-angular";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { authTattoProvider } from "../../../providers/api/authTatto";
 import { AlertProvider } from "../../../providers/alert";
+import { Authjwt } from "../../../providers/authjwt";
+import { StorageDB } from "../../../providers/storageDB";
 
 @IonicPage()
 @Component({
@@ -16,17 +23,20 @@ export class LoginPage {
   email_validator = /^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
   loginForm: FormGroup;
   loginUser = {};
-  showMessage:number;
-  message:string;
+  showMessage: number;
+  message: string;
+  showLogin: boolean = false;
   constructor(
     public navctrl: NavController,
     public navParams: NavParams,
     public apiRest: authTattoProvider,
     public alertP: AlertProvider,
     public menuCtrl: MenuController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private jwt: Authjwt,
+    private dbStorage: StorageDB
   ) {
-    this.menuCtrl.swipeEnable(true)
+    this.menuCtrl.swipeEnable(true);
     this.loginForm = this.formBuilder.group({
       email: [
         "",
@@ -40,13 +50,34 @@ export class LoginPage {
     this.navctrl.push("RegisterPage");
   }
 
-  ionChange($event){
-    if (!this.loginForm.controls.email.valid && this.loginForm.controls.email.dirty) {
-      this.showMessage = 1
-      this.message = "Por favor ingrese un correo electronico valido"
-    }else{
-      this.showMessage = 0
+  ionChange($event) {
+    if (
+      !this.loginForm.controls.email.valid &&
+      this.loginForm.controls.email.dirty
+    ) {
+      this.showMessage = 1;
+      this.message = "Por favor ingrese un correo electronico valido";
+    } else {
+      this.showMessage = 0;
     }
+  }
+
+  ionViewDidLoad() {
+    this.getToken().then(res => {
+      if (res === null) {
+        this.showLogin = false;
+      } else {
+        const flag = this.jwt.authToken(res);
+        if (!flag) {
+          this.showLogin = true;
+        } else {
+          this.navctrl.setRoot("OrdersPage");
+        }
+      }
+    });
+  }
+  async getToken() {
+    return await this.dbStorage.getItem("token");
   }
 
   login() {
@@ -62,7 +93,8 @@ export class LoginPage {
               "Cerrar"
             );
           } else {
-            console.log("soy verdadero");
+            this.dbStorage.setItem("token", res["data"]["token"]);
+            this.navctrl.setRoot("OrdersPage");
           }
         }
       })

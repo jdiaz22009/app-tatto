@@ -36,10 +36,10 @@ export class RegisterPage {
     public alertCtrl: AlertProvider,
     public loadingCtrl: LoadingController,
     public apiRest: authTattoProvider,
-    public menuCtrl:MenuController,
+    public menuCtrl: MenuController,
     private formbuilder: FormBuilder
   ) {
-    this.menuCtrl.swipeEnable(false)
+    this.menuCtrl.swipeEnable(true);
     this.registerForm = this.formbuilder.group({
       name: ["", Validators.required],
       last_name: ["", Validators.required],
@@ -120,7 +120,11 @@ export class RegisterPage {
         this.registerFinish.controls["urlFacebook"].setValue("");
         this.registerFinish.controls["urlInstagram"].setValue("");
         if (res.data.code === 201) {
-          this.alertCtrl.showAlert(null,'Gracias por registrarte, en momento un equipo se comunicara o enviara un correo indicandote que has sido aceptado!','Cerrar')
+          this.alertCtrl.showAlert(
+            null,
+            "Gracias por registrarte, en momento un equipo se comunicara o enviara un correo indicandote que has sido aceptado!",
+            "Cerrar"
+          );
           this.navCtrl.pop();
         } else {
           this.alertCtrl.showAlert(
