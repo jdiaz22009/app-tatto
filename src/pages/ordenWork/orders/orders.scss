@@ -1,6 +1,26 @@
-page-order{
+page-order {
+  .content {
+    background: url("../../../assets/imgs/fondoCreatework.jpeg") no-repeat;
+  }
+  .content .section-orders {
+    margin-top: 5%;
+  }
 
-  .content{
-    background: url('../../../assets/imgs/fondoCreatework.jpeg') no-repeat
+  .content .section-orders .back-list {
+    background: #4b4b4b;
+    color: #ffffff;
+  }
+
+  .p {
+    color: #ffffff;
+  }
+
+  .fab-ion {
+    margin-top: 82vh;
+    margin-left: 84%;
+  }
+  .fab-ion .btn-color {
+    width: 7vh;
+    height: 7vh;
   }
 }

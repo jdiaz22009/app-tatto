@@ -62,19 +62,18 @@ export class LoginPage {
     }
   }
 
-  ionViewDidLoad() {
-    this.getToken().then(res => {
-      if (res === null) {
-        this.showLogin = false;
-      } else {
-        const flag = this.jwt.authToken(res);
-        if (!flag) {
-          this.showLogin = true;
-        } else {
-          this.navctrl.setRoot("OrdersPage");
-        }
+ async ionViewDidLoad() {
+    const token = await this.getToken()
+    if (token != null) {
+      const jwt = await this.jwt.authToken(token)
+      if (jwt) {
+        this.navctrl.setRoot('OrdersPage')
+      }else{
+        this.showLogin = true
       }
-    });
+    }else{
+      this.showLogin = true
+    }
   }
   async getToken() {
     return await this.dbStorage.getItem("token");

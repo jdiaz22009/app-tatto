@@ -2,10 +2,19 @@ import { Injectable } from "@angular/core";
 import { decode } from "jwt-simple";
 import moment from "moment";
 
+import { CONFIGURL } from "./configUrl";
+import { StorageDB } from "../providers/storageDB";
+
 @Injectable()
 export class Authjwt {
-  secre_token: string = "D4TAP4R4L0G1N04UTH";
+  secre_token: string = CONFIGURL.api.secret_token;
   flagAuth: boolean = false;
+
+  constructor(
+    public storageDB:StorageDB
+  ){
+
+  }
 
   public authToken(token) {
     console.log("token", token);
@@ -22,6 +31,7 @@ export class Authjwt {
           return true;
         }
       } catch (error) {
+        this.storageDB.deleteDB()
         console.error(error, "error en");
         return false;
       }

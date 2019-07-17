@@ -6,4 +6,25 @@
     <ion-title>Ordenes de trabajo</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content class="content"> </ion-content>
+<ion-content class="content">
+  <section class="section-orders">
+    <ion-list *ngFor="let item of tattoArreglo">
+      <ion-item class="back-list">
+        <ion-thumbnail item-start>
+          #{{ item.skup_order }}
+          <img src="../../../assets/imgs/Open-Folder.png" />
+        </ion-thumbnail>
+        <h2>Cliente:{{ item.nameClient }}</h2>
+        <p class="p">Edad: {{ item.age }}</p>
+        <p class="p">Precio: ${{ item.priceTatto }}</p>
+        <button ion-button clear item-end>View</button>
+      </ion-item>
+    </ion-list>
+  </section>
+
+  <ion-fab class="fab-ion">
+    <button ion-fab color="dark" class="btn-color">
+      <ion-icon ios="ios-add" md="md-add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

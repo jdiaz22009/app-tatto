@@ -1,4 +1,4 @@
-<ion-content class="content">
+<ion-content class="content" *ngIf="showLogin">
   <section class="section-login">
     <form [formGroup]="loginForm">
       <ion-list>
@@ -25,6 +25,6 @@
 
 </ion-content>
 
-<ion-footer class="ion-footer" >
+<ion-footer class="ion-footer" *ngIf="showLogin">
     <button class="btn" ion-button color="dark"  (click)="login()" [disabled]="!loginForm.valid" full>Entrar</button>
   </ion-footer>
