@@ -1,8 +1,7 @@
 const env = "dev";
 const dev = {
   api: {
-    //url: 'http://192.168.0.7:3000/api/',
-    url: "http://192.168.0.6:3000/api/",
+    url: "http://68.183.161.122:3000/api/",
     secret_token: "D4TAP4R4L0G1N04UTH",
     tatto: {
       POST: {
