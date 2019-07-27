@@ -4,7 +4,8 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  MenuController
+  MenuController,
+  ModalController
 } from "ionic-angular";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -32,6 +33,7 @@ export class LoginPage {
     public apiRest: authTattoProvider,
     public alertP: AlertProvider,
     public menuCtrl: MenuController,
+    public modalCtrl: ModalController,
     private formBuilder: FormBuilder,
     private jwt: Authjwt,
     private dbStorage: StorageDB
@@ -100,5 +102,10 @@ export class LoginPage {
       .catch(e => {
         console.error(e);
       });
+  }
+
+  forgotPasword(){
+    const modal =  this.modalCtrl.create('ForgotPassword')
+    modal.present()
   }
 }
