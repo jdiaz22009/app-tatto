@@ -11,7 +11,8 @@ export class authTattoProvider {
 
   postRegisterPath: string = CONFIGURL.api.tatto.POST.register;
   postLoginPath: string = CONFIGURL.api.tatto.POST.auth;
-  postValidEmail:string = CONFIGURL.api.tatto.GET.getValidEmail
+  postValidEmail: string = CONFIGURL.api.tatto.GET.getValidEmail;
+  postForgotPassword: string = CONFIGURL.api.tatto.POST.forgotPassword;
 
   constructor(
     public apiRest: ApiRestClientProvider,
@@ -28,6 +29,16 @@ export class authTattoProvider {
     }
   }
 
+  async forgotPassword(data, sub) {
+    const url = this.apiUrl + this.postForgotPassword + sub
+    const header = { headers: { "content-type": "application/json" } };
+    try {
+      return await this.apiRest.requestHttp("POST", url, data, header)
+    } catch (e) {
+      throw e
+    }
+  }
+
   async login(login) {
     const url = this.apiUrl + this.postLoginPath;
     const header = { headers: { "content-type": "application/json" } };
@@ -38,15 +49,15 @@ export class authTattoProvider {
     }
   }
 
-  async validEmail(params){
-    console.log(params)
+  async validEmail(params) {
+    console.log(params);
     const url = this.apiUrl + this.postValidEmail;
     const header = { headers: { "content-type": "application/json" } };
-   //const headers = { 'Authorization': token, 'content-type': 'application/json' }
-   try {
-     return await this.apiRest.requestHttp('POST',url,params,header)
-   } catch (e) {
-     throw e
-   }
+    //const headers = { 'Authorization': token, 'content-type': 'application/json' }
+    try {
+      return await this.apiRest.requestHttp("POST", url, params, header);
+    } catch (e) {
+      throw e;
+    }
   }
 }
