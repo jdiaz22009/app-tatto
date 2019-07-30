@@ -1,5 +1,5 @@
-//const env = "prod";
-const env = "dev";
+const env = "prod";
+// const env = "dev";
 const prod = {
   api: {
     url: "http://68.183.161.122:3000/api/",
@@ -19,7 +19,7 @@ const prod = {
 };
 const dev = {
   api: {
-    url: "http://192.168.0.8:3000/api/",
+    url: "http://192.168.0.3:3000/api/",
     secret_token: "D4TAP4R4L0G1N04UTH",
     tatto: {
       POST: {
@@ -34,10 +34,8 @@ const dev = {
     }
   }
 };
-
 const config = {
   dev,
   prod
 };
-
 export const CONFIGURL = config[env];

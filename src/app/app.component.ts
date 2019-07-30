@@ -1,10 +1,11 @@
 import { Component, ViewChild } from "@angular/core";
-import { Platform, Nav } from "ionic-angular";
+import { Platform, Nav, ToastController, Events } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
 import { AlertProvider } from "../providers/alert";
 import { StorageDB } from "../providers/storageDB";
+import { NetworkProvider } from "../providers/network";
 @Component({
   templateUrl: "app.html"
 })
@@ -18,12 +19,16 @@ export class MyApp {
     component: any;
   }>;
   defaultimg: string = "../assets/imgs/photoDefautlProfile.png";
+  alertNetwork: any = null;
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public alertCtrl: AlertProvider,
-    public storageDb: StorageDB
+    public storageDb: StorageDB,
+    public network: NetworkProvider,
+    public toastCtrl: ToastController,
+    public events: Events
   ) {
     this.menuItem();
     this.initApp();
@@ -31,13 +36,23 @@ export class MyApp {
 
   initApp() {
     this.platform.ready().then(() => {
+      if (this.platform.is("cordova")) {
+        this.network.startNetworkMonitor();
+        if (!this.network.getType()) {
+          this.showToast(
+            true,
+            "No tienes Internet, revisa tu conexión e intenta de nuevo."
+          );
+        }
+      }
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
+      // this.statusBar.styleDefault();
+      this.statusBar.backgroundColorByHexString('#0000');
       this.splashScreen.hide();
     });
   }
-
   menuItem() {
     this.pages = [
       {
@@ -92,6 +107,39 @@ export class MyApp {
         });
     } else {
       this.nav.setRoot(page.component);
+    }
+  }
+
+
+  netwokSubscribe() {
+    this.events.subscribe("network:offline", () => {
+      this.showToast(
+        true,
+        "No tienes Internet, revisa tu conexión e intenta de nuevo."
+      );
+    });
+    this.events.subscribe("network:online", () => {
+      this.showToast(true, "Conexion establecidad");
+    });
+  }
+
+  showToast(show, msg) {
+    if (this.alertNetwork == null) {
+      const toast = this.toastCtrl.create({
+        message: msg,
+        showCloseButton: show
+      });
+      toast.present();
+    }
+    if (show) {
+      setTimeout(() => {
+        if (!this.network.getType()) {
+          this.showToast(
+            true,
+            "No tienes Internet, revisa tu conexión e intenta de nuevo."
+          );
+        }
+      }, 1500);
     }
   }
 }
