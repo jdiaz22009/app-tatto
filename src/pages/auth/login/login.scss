@@ -16,7 +16,7 @@ page-login {
   border-radius: 8px;
 }
 
-.account > .label-item {
+.io-footer .account > .label-item {
   width: 100%;
   color: white;
   display: flex;
@@ -28,11 +28,7 @@ page-login {
   margin-left: 5%;
 }
 
-.account .label-item{
+.io-footer .account .label-item{
   font-size: 3vh;
 }
-.ion-footer .btn {
-  margin-top: -22%;
-  height: 49px;
-  font-size: 3vh;
-}
+

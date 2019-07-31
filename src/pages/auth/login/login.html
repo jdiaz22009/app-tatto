@@ -19,31 +19,30 @@
           <ion-input formControlName="password" type="password"></ion-input>
         </ion-item>
       </ion-list>
+      <button
+        class="btn"
+        ion-button
+        color="dark"
+        (click)="login()"
+        [disabled]="!loginForm.valid"
+        full
+      >
+        Entrar
+      </button>
     </form>
-
-    <div class="account">
-      <ion-label class="label-item"
-        >Crea una cuenta &nbsp;
-        <strong (click)="goRegister()"> Ahora mismo</strong></ion-label
-      >
-      <ion-label class="label-item"
-        ><strong (click)="forgotPasword()"
-          >Has olvidado tu contraseña?</strong
-        ></ion-label
-      >
-    </div>
   </section>
 </ion-content>
 
-<ion-footer class="ion-footer" *ngIf="showLogin">
-  <button
-    class="btn"
-    ion-button
-    color="dark"
-    (click)="login()"
-    [disabled]="!loginForm.valid"
-    full
-  >
-    Entrar
-  </button>
+<ion-footer class="io-footer" *ngIf="showLogin2">
+  <div class="account">
+    <ion-label class="label-item"
+      >Crea una cuenta &nbsp;
+      <strong (click)="goRegister()"> Ahora mismo</strong></ion-label
+    >
+    <ion-label class="label-item"
+      ><strong (click)="forgotPasword()"
+        >Has olvidado tu contraseña?</strong
+      ></ion-label
+    >
+  </div>
 </ion-footer>

@@ -1,18 +1,19 @@
 import { Injectable } from "@angular/core";
-import { Events } from "ionic-angular";
 import { Network } from "@ionic-native/network";
+import { ToastController } from "ionic-angular";
 
 @Injectable()
 export class NetworkProvider {
   disconnectSubscription: any;
   connectSubscription: any;
 
-  constructor(public network: Network, public eventCtrl: Events) {}
+  constructor(public network: Network, public toastCtrl:ToastController) {}
 
   startNetworkMonitor() {
     this.disconnectSubscription = this.network.onDisconnect().subscribe(() => {
       console.log("network was disconnected :-(");
-      this.eventCtrl.publish("network:offline");
+      this.showToast('Telefono sin conexion')
+
     });
     this.connectSubscription = this.network.onConnect().subscribe(() => {
       console.log("network connected! :-)");
@@ -23,11 +24,10 @@ export class NetworkProvider {
           this.network.type === "3g" ||
           this.network.type === "4g"
         ) {
-          console.log("wifi network connection");
-          this.eventCtrl.publish("network:online");
+          console.log(this.network.type + " network connection");
+          this.showToast('Conectado')
         } else if (this.network.type === "none") {
           console.log("none network");
-          this.eventCtrl.publish("network:offline");
         }
       }, 3000);
     });
@@ -43,5 +43,13 @@ export class NetworkProvider {
       return false;
     }
     return true;
+  }
+
+  showToast(msg) {
+    const toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000
+    });
+    toast.present();
   }
 }

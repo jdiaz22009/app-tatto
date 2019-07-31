@@ -4,6 +4,9 @@ import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { IonicStorageModule } from "@ionic/storage";
+import { Network } from "@ionic-native/network";
+import { Keyboard } from '@ionic-native/keyboard'
+
 
 import { MyApp } from "./app.component";
 import { HomePage } from "../pages/home/home";
@@ -11,7 +14,6 @@ import { HomePage } from "../pages/home/home";
 //? Providers
 import { PROVIDERS_MODULE } from "../providers/index";
 import { API_MODULE } from "../providers/api/index";
-import { Network } from "@ionic-native/network";
 
 @NgModule({
   declarations: [MyApp, HomePage],
@@ -27,6 +29,7 @@ import { Network } from "@ionic-native/network";
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Network,
+    Keyboard,
     PROVIDERS_MODULE,
     API_MODULE
   ]

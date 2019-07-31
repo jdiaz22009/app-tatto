@@ -9,6 +9,7 @@ import {
 } from "ionic-angular";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Keyboard } from "@ionic-native/keyboard";
 
 import { authTattoProvider } from "../../../providers/api/authTatto";
 import { AlertProvider } from "../../../providers/alert";
@@ -27,6 +28,7 @@ export class LoginPage {
   showMessage: number;
   message: string;
   showLogin: boolean = false;
+  showLogin2: boolean = true;
   constructor(
     public navctrl: NavController,
     public navParams: NavParams,
@@ -34,6 +36,7 @@ export class LoginPage {
     public alertP: AlertProvider,
     public menuCtrl: MenuController,
     public modalCtrl: ModalController,
+    public keyboard: Keyboard,
     private formBuilder: FormBuilder,
     private jwt: Authjwt,
     private dbStorage: StorageDB
@@ -64,19 +67,31 @@ export class LoginPage {
     }
   }
 
- async ionViewDidLoad() {
-    const token = await this.getToken()
+  async ionViewDidLoad() {
+    const token = await this.getToken();
     if (token != null) {
-      const jwt = await this.jwt.authToken(token)
+      const jwt = await this.jwt.authToken(token);
       if (jwt) {
-        this.navctrl.setRoot('OrdersPage')
-      }else{
-        this.showLogin = true
+        this.navctrl.setRoot("OrdersPage");
+      } else {
+        this.showLogin = true;
       }
-    }else{
-      this.showLogin = true
+    } else {
+      this.showLogin = true;
     }
+    this.keyboardshow()
   }
+
+  keyboardshow() {
+    this.keyboard.onKeyboardShow().subscribe(data => {
+      this.showLogin2 = false;
+    });
+
+    this.keyboard.onKeyboardHide().subscribe(data => {
+      this.showLogin2 = true;
+    });
+  }
+
   async getToken() {
     return await this.dbStorage.getItem("token");
   }
@@ -104,8 +119,8 @@ export class LoginPage {
       });
   }
 
-  forgotPasword(){
-    const modal =  this.modalCtrl.create('ForgotPassword')
-    modal.present()
+  forgotPasword() {
+    const modal = this.modalCtrl.create("ForgotPassword");
+    modal.present();
   }
 }
