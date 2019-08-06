@@ -1,8 +1,9 @@
 const env = "prod";
 // const env = "dev";
 const prod = {
+  environment: 'prod',
   api: {
-    url: "http://68.183.161.122:3000/api/",
+    url: "https://tattoya.co/api/",
     secret_token: "D4TAP4R4L0G1N04UTH",
     tatto: {
       POST: {
@@ -18,8 +19,9 @@ const prod = {
   }
 };
 const dev = {
+  environment: 'dev',
   api: {
-    url: "http://192.168.0.3:3000/api/",
+    url: "localhost/api/",
     secret_token: "D4TAP4R4L0G1N04UTH",
     tatto: {
       POST: {
