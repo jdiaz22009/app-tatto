@@ -1,34 +1,45 @@
 page-login {
+
   .content {
     background: url("../../../assets/imgs/auth.jpg") no-repeat;
   }
+
+  .content .section-img{
+    width: 55%;
+    position: relative;
+    top: 3%;
+    left: 23%;
+  }
+  .content .section-login {
+    width: 95%;
+    margin-left: 3%;
+    position: relative;
+    top: 7%;
+  }
+  
+  .content .section-login .item-form {
+    height: 80%;
+    border: #000000 solid;
+    border-radius: 8px;
+  }
+  
+  .io-footer .account > .label-item {
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .required{
+    color: red;
+    margin-left: 5%;
+  }
+  
+  .io-footer .account .label-item{
+    font-size: 3vh;
+  }
 }
 
-.content .section-login {
-  width: 95%;
-  margin-left: 3%;
-  margin-top: 70%;
-}
 
-.content .section-login .item-form {
-  height: 80%;
-  border: #000000 solid;
-  border-radius: 8px;
-}
 
-.io-footer .account > .label-item {
-  width: 100%;
-  color: white;
-  display: flex;
-  justify-content: center;
-}
-
-.required{
-  color: red;
-  margin-left: 5%;
-}
-
-.io-footer .account .label-item{
-  font-size: 3vh;
-}
 

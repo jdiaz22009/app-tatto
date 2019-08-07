@@ -73,11 +73,9 @@ export class LoginPage {
       const jwt = await this.jwt.authToken(token);
       if (jwt) {
         this.navctrl.setRoot("OrdersPage");
-      } else {
-        this.showLogin = true;
       }
     } else {
-      this.showLogin = true;
+      this.showLogin = true
     }
     this.keyboardshow()
   }
@@ -112,13 +110,18 @@ export class LoginPage {
             this.dbStorage.setItem("token", res["data"]["token"]);
             this.navctrl.setRoot("OrdersPage");
           }
+        } else {
+          this.alertP.showAlert(
+            null,
+            "Correo y contraseña son incorrectos",
+            "Cerrar"
+          )
         }
       })
       .catch(e => {
         console.error(e);
       });
   }
-
   forgotPasword() {
     const modal = this.modalCtrl.create("ForgotPassword");
     modal.present();
