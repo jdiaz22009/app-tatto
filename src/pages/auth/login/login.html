@@ -1,18 +1,20 @@
-<ion-content class="content" *ngIf="showLogin">
-  <section class="section-img">
+<ion-content class="content" no-bounce>
+
+  <div class="section-img">
     <img src="assets/imgs/tu-tattoo.png" alt="img">
-  </section>
-  <section class="section-login">
+  </div>
+
+  <!-- <section class="section-login"> -->
+
     <form [formGroup]="loginForm">
+
       <ion-list>
+        
         <ion-item class="item-form">
           <ion-label floating>Correo electronico</ion-label>
-          <ion-input
-            formControlName="email"
-            (ionChange)="ionChange($event)"
-            type="text"
-          ></ion-input>
+          <ion-input formControlName="email" (ionChange)="ionChange($event)" type="text"></ion-input>
         </ion-item>
+
         <div class="required" *ngIf="showMessage == 1">
           <span>{{ message }}</span>
         </div>
@@ -21,31 +23,25 @@
           <ion-label floating>Contraseña</ion-label>
           <ion-input formControlName="password" type="password"></ion-input>
         </ion-item>
+
       </ion-list>
-      <button
-        class="btn"
-        ion-button
-        color="dark"
-        (click)="login()"
-        [disabled]="!loginForm.valid"
-        full
-      >
+
+      <button class="btn" ion-button color="dark" (click)="login()" [disabled]="!loginForm.valid" full>
         Entrar
       </button>
+
     </form>
-  </section>
+
+  <!-- </section> -->
+
 </ion-content>
 
-<ion-footer class="io-footer" *ngIf="showLogin2">
+<ion-footer class="io-footer">
+
   <div class="account">
-    <ion-label class="label-item"
-      >Crea una cuenta &nbsp;
-      <strong (click)="goRegister()"> Ahora mismo</strong></ion-label
-    >
-    <ion-label class="label-item"
-      ><strong (click)="forgotPasword()"
-        >Has olvidado tu contraseña?</strong
-      ></ion-label
-    >
+    <ion-label class="label-item">Crea una cuenta &nbsp;
+      <strong (click)="goRegister()"> Ahora mismo</strong></ion-label>
+    <ion-label class="label-item"><strong (click)="forgotPasword()">Has olvidado tu contraseña?</strong></ion-label>
   </div>
+
 </ion-footer>

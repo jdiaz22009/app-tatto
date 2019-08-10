@@ -5,8 +5,6 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { IonicStorageModule } from "@ionic/storage";
 import { Network } from "@ionic-native/network";
-import { Keyboard } from '@ionic-native/keyboard'
-
 
 import { MyApp } from "./app.component";
 import { HomePage } from "../pages/home/home";
@@ -29,7 +27,6 @@ import { API_MODULE } from "../providers/api/index";
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Network,
-    Keyboard,
     PROVIDERS_MODULE,
     API_MODULE
   ]

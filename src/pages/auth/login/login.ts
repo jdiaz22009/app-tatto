@@ -9,7 +9,6 @@ import {
 } from "ionic-angular";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Keyboard } from "@ionic-native/keyboard";
 
 import { authTattoProvider } from "../../../providers/api/authTatto";
 import { AlertProvider } from "../../../providers/alert";
@@ -36,18 +35,17 @@ export class LoginPage {
     public alertP: AlertProvider,
     public menuCtrl: MenuController,
     public modalCtrl: ModalController,
-    public keyboard: Keyboard,
     private formBuilder: FormBuilder,
     private jwt: Authjwt,
     private dbStorage: StorageDB
   ) {
-    this.menuCtrl.swipeEnable(true);
+    this.menuCtrl.swipeEnable(false);
     this.loginForm = this.formBuilder.group({
       email: [
         "",
         Validators.compose([Validators.pattern(this.email_validator)])
       ],
-      password: ["", Validators.required]
+     password: ["", Validators.required]
     });
   }
 
@@ -77,19 +75,7 @@ export class LoginPage {
     } else {
       this.showLogin = true
     }
-    this.keyboardshow()
   }
-
-  keyboardshow() {
-    this.keyboard.onKeyboardShow().subscribe(data => {
-      this.showLogin2 = false;
-    });
-
-    this.keyboard.onKeyboardHide().subscribe(data => {
-      this.showLogin2 = true;
-    });
-  }
-
   async getToken() {
     return await this.dbStorage.getItem("token");
   }
