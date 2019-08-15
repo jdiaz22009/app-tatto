@@ -1,47 +1,35 @@
-<ion-content class="content" no-bounce>
-
-  <div class="section-img">
+<ion-content padding class="content">
+  <section class="section-img">
     <img src="assets/imgs/tu-tattoo.png" alt="img">
-  </div>
-
-  <!-- <section class="section-login"> -->
-
+  </section>
+  <section class="section-input">
     <form [formGroup]="loginForm">
-
       <ion-list>
-        
-        <ion-item class="item-form">
-          <ion-label floating>Correo electronico</ion-label>
-          <ion-input formControlName="email" (ionChange)="ionChange($event)" type="text"></ion-input>
-        </ion-item>
-
-        <div class="required" *ngIf="showMessage == 1">
-          <span>{{ message }}</span>
-        </div>
-
-        <ion-item class="item-form">
-          <ion-label floating>Contraseña</ion-label>
-          <ion-input formControlName="password" type="password"></ion-input>
-        </ion-item>
-
+        <section class="section-login">
+          <ion-list>
+            <ion-item class="input-radius">
+              <ion-label floating>Username</ion-label>
+              <ion-input type="text" formControlName="email" (ionChange)="ionChange($event)"></ion-input>
+            </ion-item>
+          </ion-list>
+          <div *ngIf="showMessage === 1">
+            <p class="required">{{message}}</p>
+          </div>
+          <ion-list>
+            <ion-item class="input-radius">
+              <ion-label floating>Password</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+          </ion-list>
+        </section>
       </ion-list>
-
-      <button class="btn" ion-button color="dark" (click)="login()" [disabled]="!loginForm.valid" full>
-        Entrar
-      </button>
-
     </form>
-
-  <!-- </section> -->
-
+    <div class="btn-sing">
+      <button ion-button color="dark" outline class="btn" [disabled]="!loginForm.valid" (click)="login()">Entrar</button>
+    </div>
+  </section>
 </ion-content>
-
-<ion-footer class="io-footer">
-
-  <div class="account">
-    <ion-label class="label-item">Crea una cuenta &nbsp;
-      <strong (click)="goRegister()"> Ahora mismo</strong></ion-label>
-    <ion-label class="label-item"><strong (click)="forgotPasword()">Has olvidado tu contraseña?</strong></ion-label>
-  </div>
-
+<ion-footer *ngIf="!hideFooter">
+  <p class="text">Crea una cuenta&nbsp;<strong (click)="goRegister()"> Ahora mismo</strong></p>
+  <p class="text" (click)="forgotPasword()"> <strong> Has olviado tu contraseña?</strong></p>
 </ion-footer>

@@ -1,43 +1,54 @@
 page-login {
-
-  .content {
-    background: url('../../../assets/imgs/auth.jpg') no-repeat 100% 100%;   
-    // background: url("../../../assets/imgs/auth.jpg") no-repeat;
-    // background-size: 100% 100%;
+  .content{
+    background: url('../../../assets/imgs/auth.jpg') no-repeat
   }
 
-  .section-img{
-    width: 55%;
-    // position: relative;
-    // top: 3%;
-    // left: 23%;
+  .section-input{
+    margin-top: 12%;
   }
-  .content .section-login {
-    // width: 95%;
-    // margin-left: 3%;
-    // position: relative;
-    // top: 7%;
+
+  .content .section-img{
+    width: 53%;
+    margin: auto;
+    margin-top: 9%;
   }
-  
-  .content .section-login .item-form {
-    // height: 80%;
-    border: #000000 solid;
-    border-radius: 8px;
+
+  .input-radius{
+    border-radius: 2vh;
   }
-  
-  .io-footer .account > .label-item {
-    color: white;
+
+  .section-login{
+    margin: auto;
+    margin-top: 10%;
+  }
+
+  .btn-sing{
+    color: #ffffff;
+    margin: auto;
     display: flex;
     justify-content: center;
   }
-  
+  .btn{
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    width: 45vh;
+    background: #000000;
+  }
+  .btn:hover{
+    color: #ffffff;
+    border: 1px solid #ffffff;
+  }
+  .text{
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 3vh;
+  }
+
   .required{
     color: red;
-    margin-left: 5%;
-  }
-  
-  .io-footer .account .label-item{
-    font-size: 3vh;
+    display: flex;
+    justify-content: center;
   }
 }
 

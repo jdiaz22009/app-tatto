@@ -39,7 +39,7 @@ export class RegisterPage {
     public menuCtrl: MenuController,
     private formbuilder: FormBuilder
   ) {
-    this.menuCtrl.swipeEnable(true);
+    this.menuCtrl.swipeEnable(false);
     this.registerForm = this.formbuilder.group({
       name: ["", Validators.required],
       last_name: ["", Validators.required],

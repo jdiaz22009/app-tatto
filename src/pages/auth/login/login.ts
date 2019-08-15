@@ -10,6 +10,8 @@ import {
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
+import { Keyboard } from '@ionic-native/keyboard'
+
 import { authTattoProvider } from "../../../providers/api/authTatto";
 import { AlertProvider } from "../../../providers/alert";
 import { Authjwt } from "../../../providers/authjwt";
@@ -26,6 +28,7 @@ export class LoginPage {
   loginUser = {};
   showMessage: number;
   message: string;
+  hideFooter: boolean = false
   showLogin: boolean = false;
   showLogin2: boolean = true;
   constructor(
@@ -37,6 +40,7 @@ export class LoginPage {
     public modalCtrl: ModalController,
     private formBuilder: FormBuilder,
     private jwt: Authjwt,
+    public keyboard: Keyboard,
     private dbStorage: StorageDB
   ) {
     this.menuCtrl.swipeEnable(false);
@@ -45,12 +49,23 @@ export class LoginPage {
         "",
         Validators.compose([Validators.pattern(this.email_validator)])
       ],
-     password: ["", Validators.required]
+      password: ["", Validators.required]
     });
   }
 
   goRegister() {
     this.navctrl.push("RegisterPage");
+  }
+
+  hiddenFooterKeyBoard() {
+    this.keyboard.onKeyboardShow().subscribe(data => {
+      this.hideFooter = true
+    })
+
+    this.keyboard.onKeyboardHide().subscribe(data => {
+      this.hideFooter = false
+    })
+
   }
 
   ionChange($event) {
