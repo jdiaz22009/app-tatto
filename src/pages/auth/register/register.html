@@ -61,10 +61,12 @@
           <ion-label floating>url instagram </ion-label>
           <ion-input formControlName="urlInstagram" type="text"></ion-input>
         </ion-item>
+      </ion-list>
 
+      <ion-list>
         <ion-item class="item-terms">
           <ion-label>Aceptar terminos y condiciones</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox formControlName="checkTermns" (ionChange)="termsAndCondition()" [checked]="check"></ion-checkbox>
         </ion-item>
       </ion-list>
 

@@ -5,7 +5,8 @@ import {
   NavController,
   NavParams,
   LoadingController,
-  MenuController
+  MenuController,
+  ModalController
 } from "ionic-angular";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -29,6 +30,7 @@ export class RegisterPage {
   show: number = 0;
   message: string = "";
   showMessage: number = 0;
+  check: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -37,7 +39,8 @@ export class RegisterPage {
     public loadingCtrl: LoadingController,
     public apiRest: authTattoProvider,
     public menuCtrl: MenuController,
-    private formbuilder: FormBuilder
+    public modalCtrl: ModalController,
+    private formbuilder: FormBuilder,
   ) {
     this.menuCtrl.swipeEnable(false);
     this.registerForm = this.formbuilder.group({
@@ -59,12 +62,13 @@ export class RegisterPage {
       ageExp: [""],
       phone: ["", Validators.required],
       urlFacebook: [""],
-      urlInstagram: [""]
+      urlInstagram: [""],
+      checkTermns: [false, Validators.required]
     });
   }
 
   ionViewDidLoad() {
-    this.show = 2;
+    this.show = 1;
   }
 
   userValid() {
@@ -85,20 +89,24 @@ export class RegisterPage {
   }
   finish() {
     if (this.show === 2) {
-      this.userTatto.alias = this.registerFinish.controls["alias"].value;
-      this.userTatto.ageExp = parseInt(
-        this.registerFinish.controls["ageExp"].value
-      );
-      this.userTatto.phone = parseInt(
-        this.registerFinish.controls["phone"].value
-      );
-      this.userTatto.urlFacebook = this.registerFinish.controls[
-        "urlFacebook"
-      ].value;
-      this.userTatto.urlInstagram = this.registerFinish.controls[
-        "urlInstagram"
-      ].value;
-      this.userRegister(this.userTatto);
+      if (!this.registerFinish.controls['checkTermns'].value) {
+        this.alertCtrl.showAlert('Terminos y condiciones', 'Debe Aceptar los terminos y condiciones', 'Cerrar')
+      } else {
+        this.userTatto.alias = this.registerFinish.controls["alias"].value;
+        this.userTatto.ageExp = parseInt(
+          this.registerFinish.controls["ageExp"].value
+        );
+        this.userTatto.phone = parseInt(
+          this.registerFinish.controls["phone"].value
+        );
+        this.userTatto.urlFacebook = this.registerFinish.controls[
+          "urlFacebook"
+        ].value;
+        this.userTatto.urlInstagram = this.registerFinish.controls[
+          "urlInstagram"
+        ].value;
+        this.userRegister(this.userTatto);
+      }
     }
   }
   userRegister(data) {
@@ -167,6 +175,16 @@ export class RegisterPage {
         });
     } else {
       this.showMessage = 0;
+    }
+  }
+
+  termsAndCondition() {
+    console.log('check', this.registerFinish.controls['checkTermns'].value)
+    if (this.registerFinish.controls['checkTermns'].value) {
+      const modal = this.modalCtrl.create("TermsConditionModals");
+      modal.present();
+    } else {
+      this.check = this.registerFinish.controls['checkTermns'].value
     }
   }
 }
