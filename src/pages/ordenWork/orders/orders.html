@@ -6,7 +6,7 @@
     <ion-title>Ordenes de trabajo</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content class="content">
+<ion-content padding class="content">
   <section class="section-orders">
     <ion-list *ngFor="let item of tattoArreglo">
       <ion-item class="back-list">
@@ -23,7 +23,7 @@
   </section>
 
   <ion-fab class="fab-ion">
-    <button ion-fab color="dark" class="btn-color">
+    <button ion-fab color="dark" class="btn-color" (click)="nextCreateOrder()">
       <ion-icon ios="ios-add" md="md-add"></ion-icon>
     </button>
   </ion-fab>

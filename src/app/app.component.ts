@@ -51,7 +51,7 @@ export class MyApp {
         title: "Crear orden",
         icon: "md-folder",
         iconios: "ios-folder",
-        component: "LoginPage"
+        component: "RegisterOrdersPage"
       },
       {
         title: "Listar orden",

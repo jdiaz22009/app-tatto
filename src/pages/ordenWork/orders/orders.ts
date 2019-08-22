@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, LoadingController } from "ionic-angular";
+import { IonicPage, LoadingController, NavController } from "ionic-angular";
 
 import { tattoReqProvider } from "../../../providers/api/tattoReq";
 import { AlertProvider } from '../../../providers/alert';
@@ -14,7 +14,8 @@ export class OrdersPage {
   constructor(
     public tattoReq: tattoReqProvider,
     public loading: LoadingController,
-    public alertCtrl:AlertProvider
+    public alertCtrl:AlertProvider,
+    public navCtrl:NavController
   ) {}
 
   ionViewDidLoad() {
@@ -42,5 +43,9 @@ export class OrdersPage {
       console.error("error en el servidor");
       this.alertCtrl.showAlert(null,'Hubo un erro al cargar las ordenes, intente mas tarde','Cerrar')
     }
+  }
+
+  nextCreateOrder(){
+    this.navCtrl.push('RegisterOrdersPage')
   }
 }

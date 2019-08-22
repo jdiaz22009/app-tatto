@@ -57,17 +57,6 @@ export class LoginPage {
     this.navctrl.push("RegisterPage");
   }
 
-  hiddenFooterKeyBoard() {
-    this.keyboard.onKeyboardShow().subscribe(data => {
-      this.hideFooter = true
-    })
-
-    this.keyboard.onKeyboardHide().subscribe(data => {
-      this.hideFooter = false
-    })
-
-  }
-
   ionChange($event) {
     if (
       !this.loginForm.controls.email.valid &&
@@ -90,9 +79,23 @@ export class LoginPage {
     } else {
       this.showLogin = true
     }
+
+    this.hiddenFooterKeyBoard()
   }
+
   async getToken() {
     return await this.dbStorage.getItem("token");
+  }
+
+  hiddenFooterKeyBoard() {
+    this.keyboard.onKeyboardShow().subscribe(data => {
+      this.hideFooter = true
+    })
+
+    this.keyboard.onKeyboardHide().subscribe(data => {
+      this.hideFooter = false
+    })
+
   }
 
   login() {
