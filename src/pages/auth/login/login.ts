@@ -114,7 +114,7 @@ export class LoginPage {
             this.dbStorage.setItem("token", res["data"]["token"]);
             this.navctrl.setRoot("OrdersPage");
           }
-        } else {
+        } else if(res.data["code"] === 400) {
           this.alertP.showAlert(
             null,
             "Correo y contraseña son incorrectos",

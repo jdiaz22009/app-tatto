@@ -16,11 +16,7 @@
 
         <ion-item class="item-form">
           <ion-label floating>Correo electronico</ion-label>
-          <ion-input
-            formControlName="email"
-            type="email"
-            (ionChange)="validEmail($event)"
-          ></ion-input>
+          <ion-input formControlName="email" type="email" (ionChange)="validEmail($event)"></ion-input>
         </ion-item>
 
         <div class="requiered" *ngIf="showMessage === 1 || showMessage === 2">
@@ -34,10 +30,7 @@
 
         <ion-item class="item-form">
           <ion-label floating>Repita la contraseña</ion-label>
-          <ion-input
-            formControlName="repetPassword"
-            type="password"
-          ></ion-input>
+          <ion-input formControlName="repetPassword" type="password"></ion-input>
         </ion-item>
       </ion-list>
     </form>
@@ -68,33 +61,25 @@
           <ion-label floating>url instagram </ion-label>
           <ion-input formControlName="urlInstagram" type="text"></ion-input>
         </ion-item>
+
+        <ion-item class="item-terms">
+          <ion-label>Aceptar terminos y condiciones</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
       </ion-list>
+
     </form>
   </section>
 </ion-content>
 
 <ion-footer class="ion-footer">
   <div *ngIf="show === 1">
-    <button
-      margin-top
-      ion-button
-      color="dark"
-      (click)="userValid()"
-      [disabled]="!registerForm.valid"
-      full
-    >
+    <button margin-top ion-button color="dark" (click)="userValid()" [disabled]="!registerForm.valid" full>
       CREAR CUENTA
     </button>
   </div>
   <div *ngIf="show === 2">
-    <button
-      margin-top
-      ion-button
-      color="dark"
-      (click)="finish()"
-      [disabled]="!registerFinish.valid"
-      full
-    >
+    <button margin-top ion-button color="dark" (click)="finish()" [disabled]="!registerFinish.valid" full>
       TERMINAR
     </button>
   </div>

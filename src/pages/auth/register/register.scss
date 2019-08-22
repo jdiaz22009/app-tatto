@@ -15,6 +15,13 @@ page-register{
     border-radius: 8px;
   }
 
+  .content .section-register .item-terms{
+    border: none;
+    background: no-repeat;
+    color: #ffffff;
+    font-weight: bold;
+  }
+
   // .ion-footer .btn{
   //   margin-top: auto;
   //   height: 49px;
@@ -25,6 +32,8 @@ page-register{
     color: red;
     margin-left: 5%;
   }
+
+
 
   ion-header ion-icon.back-button-icon.icon {
     color: map-get($colors, light);

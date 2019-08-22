@@ -64,7 +64,7 @@ export class RegisterPage {
   }
 
   ionViewDidLoad() {
-    this.show = 1;
+    this.show = 2;
   }
 
   userValid() {

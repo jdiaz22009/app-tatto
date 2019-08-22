@@ -1,5 +1,5 @@
-const env = "prod";
-// const env = "dev";
+// const env = "prod";
+const env = "dev";
 const prod = {
   environment: 'prod',
   api: {
@@ -21,7 +21,7 @@ const prod = {
 const dev = {
   environment: 'dev',
   api: {
-    url: "localhost/api/",
+    url: "http://localhost:3000/api/",
     secret_token: "D4TAP4R4L0G1N04UTH",
     tatto: {
       POST: {
