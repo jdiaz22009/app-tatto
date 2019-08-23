@@ -1,9 +1,9 @@
-// const env = "prod";
-const env = "dev";
+const env = "prod";
+// const env = "dev";
 const prod = {
   environment: 'prod',
   api: {
-    url: "https://tattoya.co/api/",
+    url: "https://tatto-practica.herokuapp.com/api/",
     secret_token: "D4TAP4R4L0G1N04UTH",
     tatto: {
       POST: {
