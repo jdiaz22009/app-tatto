@@ -9,6 +9,8 @@ import { IonicPage, ViewController } from 'ionic-angular';
 
 export class TermsConditionModals{
 
+  titleTerms:string = 'TERMINOS Y CONDICIONES DE USO'
+
   constructor(
     public viewCtrl:ViewController
   ){
