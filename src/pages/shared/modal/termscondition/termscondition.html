@@ -14,7 +14,7 @@
 
 <ion-content padding>
   <p text-center class="textTerms">{{ titleTerms }}</p>
-  <section class="termsCondition">
+  <section class="termsCondition" *ngIf="mode === 1">
     <div text-center>
       Es requisito necesario para la adquisición de los servicios que se ofrecen en este sitio que lea y acepte los
       siguientes Términos y condiciones que a continuación se redactan. El uso de nuestro servicio implica que usted ha
@@ -59,6 +59,53 @@
       La compañía <strong>TATTOOYA </strong> reserva los derechos de cambiar o de modificar estos términos sin previo
       aviso.
     </div>
+  </section>
+  <section class="termsCondition">
+    <div text-center>
+
+      <strong> INFORMACIÓN RELEVANTE </strong>
+      <br>
+      Es requisito necesario para la adquisición de los productos que se ofrecen en la tienda de tattuajes que el
+      cliente acepte los siguientes términos y condiciones que se establecen en este contrato. Al aceptar los términos y
+      condiciones establecidos, el cliente acepta todos los procedimientos a los cuales estará sometido durante el
+      proceso de trabajo y bajo las normas legales que el contratista (En este caso tatuador) debe cumplir.
+      <br>
+      <br>
+
+      <strong> DERECHOS DEL USUARIO. </strong>
+      <br>
+      <br>
+      El cliente podrá solicitar siempre que lo requiera, información del lugar donde se está realizando este
+      procedimiento y las actas de cumplimientos legales donde especifican que el lugar cumple con las normas sanitarios
+      y biodegradables requeridas para poder funcionar.
+
+      Todos los procedimientos que se realicen en los tatuajes deben cumplir con las normas de salud correspondientes,
+      con el propósito de prevenir enfermedades sanguíneas o de otra índole.
+      <br>
+      <br>
+
+      <strong> RESPONSABILIDAD DEL USUARIO </strong>
+      <br>
+      <br>
+      El usuario deberá realizar cada uno de los procedimientos que se le indican durante y después del tatuaje, tales
+      procedimientos se pueden describir como cuidar la zona tatuada de acuerdo a las especificaciones que el tatuador
+      le informa y aplicar los medicamentos que obligatoriamente el tatuador debe recomendar después de cada trabajo.
+
+      En caso de ser menor de edad el padre estará en la obligación de realizar dichos cuidados, adicionalmente debe
+      aceptar por escrito que autoriza realizar el procedimiento a su pariente de primer grado de legitimidad.
+
+      Todos los clientes deben recurrir a su entidad de salud más cercana en el momento el que sienta algún malestar o
+      síntomas, fuera de los que se pueden presentar después de realizar este tipo de procedimientos.
+
+      Todos los clientes que se encuentren en proceso de realizar un tatuaje o perforación en la piel, acepta que no
+      presenta ninguna enfermedad sanguínea o dermatológicas que pueda afectar en su salud con la continuidad de este
+      procedimiento, entre otras enfermedades o lesiones. Adicionalmente el cliente acepta bajo los siguientes términos
+      que entiende cada uno de los cuidados y procedimientos de manera clara y concisa que el tatuador le proporciona
+      para prevenir inconvenientes de salud o disgustos personales de parte del cliente.
+      <br>
+      <br>
+    </div>
+
   </section>
 
 </ion-content>

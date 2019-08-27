@@ -7,112 +7,121 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="content">
-  <section class="section-registerOrder">
-    <ion-list>
-      <ion-grid>
-        <ion-row>
-          <ion-col col-6>
-            <ion-item class="item-form">
-              <ion-label floating>Nombre </ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col col-6>
-            <ion-item class="item-form">
-              <ion-label floating>Apellido</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col col-12>
-            <ion-item class="item-form">
-              <ion-label floating>Direccion</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col col-12>
-            <ion-item class="item-form">
-              <ion-label floating>Correo</ion-label>
-              <ion-input type="email"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-12>
-            <ion-item class="item-form">
-              <ion-label floating>Tipo de documento</ion-label>
-              <ion-select (ionChange)="ionChangeCheck($event)">
-                <ion-option *ngFor="let item of typeDocument" [value]='item.value'>{{ item.name }}</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-
-          <ion-col col-6>
-            <ion-item class="item-form">
-              <ion-label floating>Telefono</ion-label>
-              <ion-input type="number"></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col col-6>
-            <ion-item class="item-form">
-              <ion-label floating>Edad</ion-label>
-              <ion-input type="number"></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col col-6>
-            <ion-item class="item-form">
-              <ion-label floating># de sesion</ion-label>
-              <ion-input type="number"></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col col-6>
-            <ion-item class="item-form">
-              <ion-label floating>Precio</ion-label>
-              <ion-input type="number"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-12>
-            <ion-item class="item-form">
-              <ion-label floating>Deposito</ion-label>
-              <ion-input type="number"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <section class="section-kids" *ngIf="kidsAndAdult === 1">
+  <form [formGroup]="formRegisterOrder">
+    <section class="section-registerOrder">
+      <ion-list>
         <ion-grid>
           <ion-row>
-            <ion-col col-12>
+            <ion-col col-6>
               <ion-item class="item-form">
-                <ion-label floating>Nombre padre (tutor o responsable) </ion-label>
+                <ion-label floating>Nombre </ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col col-6>
+              <ion-item class="item-form">
+                <ion-label floating>Apellido</ion-label>
                 <ion-input type="text"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-12>
               <ion-item class="item-form">
-                <ion-label floating>Apellido padre (tutor o responsable) </ion-label>
+                <ion-label floating>Direccion</ion-label>
                 <ion-input type="text"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-12>
+              <ion-item class="item-form">
+                <ion-label floating>Correo</ion-label>
+                <ion-input type="email"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col col-12>
+              <ion-item class="item-form">
+                <ion-label floating>Tipo de documento</ion-label>
+                <ion-select (ionChange)="ionChangeCheck($event)">
+                  <ion-option *ngFor="let item of typeDocument" [value]='item.value'>{{ item.name }}</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col col-6>
               <ion-item class="item-form">
                 <ion-label floating>Telefono</ion-label>
                 <ion-input type="number"></ion-input>
               </ion-item>
             </ion-col>
+
+            <ion-col col-6>
+              <ion-item class="item-form">
+                <ion-label floating>Edad</ion-label>
+                <ion-input type="number"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col col-6>
+              <ion-item class="item-form">
+                <ion-label floating># de sesion</ion-label>
+                <ion-input type="number"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col col-6>
+              <ion-item class="item-form">
+                <ion-label floating>Precio</ion-label>
+                <ion-input type="number"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col col-12>
+              <ion-item class="item-form">
+                <ion-label floating>Deposito</ion-label>
+                <ion-input type="number"></ion-input>
+              </ion-item>
+            </ion-col>
           </ion-row>
         </ion-grid>
-      </section>
+        <section class="section-kids" *ngIf="kidsAndAdult === 1">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-12>
+                <ion-item class="item-form">
+                  <ion-label floating>Nombre padre (tutor o responsable) </ion-label>
+                  <ion-input type="text"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col col-12>
+                <ion-item class="item-form">
+                  <ion-label floating>Apellido padre (tutor o responsable) </ion-label>
+                  <ion-input type="text"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col col-12>
+                <ion-item class="item-form">
+                  <ion-label floating>Telefono</ion-label>
+                  <ion-input type="number"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </section>
+      </ion-list>
+    </section>
+
+    <ion-list>
+      <ion-item class="item-terms">
+        <ion-label>Aceptar terminos y condiciones</ion-label>
+        <ion-checkbox formControlName="checkTermns" (ionChange)="termsAndCondition()" [checked]="check"></ion-checkbox>
+      </ion-item>
     </ion-list>
-  </section>
+  </form>
 </ion-content>
 <ion-footer>
   <button margin-top ion-button color="dark" full>
-    Regisrar Orden de trabajo
+    Registrar Orden de trabajo
   </button>
 </ion-footer>

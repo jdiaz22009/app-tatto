@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -7,14 +7,26 @@ import { IonicPage, ViewController } from 'ionic-angular';
   templateUrl: 'termscondition.html'
 })
 
-export class TermsConditionModals{
+export class TermsConditionModals {
 
-  titleTerms:string = 'TERMINOS Y CONDICIONES DE USO'
+  titleTerms: string
+  mode:number
 
   constructor(
-    public viewCtrl:ViewController
-  ){
+    public viewCtrl: ViewController,
+    public navParams: NavParams
+  ) {
 
+  }
+
+  ionViewDidLoad() {
+    if (this.navParams.get('mode') === 1) {
+      this.titleTerms = 'TERMINOS Y CONDICIONES DE USO'
+      this.mode = this.navParams.get('mode')
+    }else if(this.navParams.get('mode') === 2){
+      this.titleTerms = 'TERMINOS Y CONDICIONES DEL SERVICIOS'
+      this.mode = this.navParams.get('mode')
+    }
   }
 
   close() {

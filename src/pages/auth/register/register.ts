@@ -181,7 +181,7 @@ export class RegisterPage {
   termsAndCondition() {
     console.log('check', this.registerFinish.controls['checkTermns'].value)
     if (this.registerFinish.controls['checkTermns'].value) {
-      const modal = this.modalCtrl.create("TermsConditionModals");
+      const modal = this.modalCtrl.create("TermsConditionModals", { mode: 1 });
       modal.present();
     } else {
       this.check = this.registerFinish.controls['checkTermns'].value

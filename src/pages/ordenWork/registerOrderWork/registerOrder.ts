@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
-import { IonicPage } from "ionic-angular";
+import { IonicPage, ModalController } from "ionic-angular";
+
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 
 @IonicPage()
@@ -9,6 +11,8 @@ import { IonicPage } from "ionic-angular";
 })
 export class RegisterOrdersPage {
 
+
+  formRegisterOrder:FormGroup
   typeDocument: any = [
     {
       name: 'C.C - Cedula',
@@ -19,12 +23,18 @@ export class RegisterOrdersPage {
       value: 'Tareta de identidad'
     }
   ]
-
+  check: boolean = false;
   kidsAndAdult: number
 
+  constructor(
+    public modalCtrl:ModalController,
+    public formBuilder:FormBuilder
 
-
-  constructor() { }
+  ) {
+    this.formRegisterOrder = this.formBuilder.group({
+      checkTermns: [false, Validators.required]
+    })
+   }
 
   ionViewDidLoad() {
     this.kidsAndAdult = 0
@@ -32,11 +42,20 @@ export class RegisterOrdersPage {
 
 
   ionChangeCheck($event) {
-    console.log('Event to method', $event)
     if ($event === 'Cedula') {
       this.kidsAndAdult = 1
     } else {
       this.kidsAndAdult = 0
+    }
+  }
+
+  termsAndCondition() {
+    console.log('check', this.formRegisterOrder.controls['checkTermns'].value)
+    if (this.formRegisterOrder.controls['checkTermns'].value) {
+      const modal = this.modalCtrl.create("TermsConditionModals", { mode: 2 });
+      modal.present();
+    } else {
+      this.check = this.formRegisterOrder.controls['checkTermns'].value
     }
   }
 
