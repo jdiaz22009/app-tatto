@@ -1,7 +1,10 @@
 import { Component } from "@angular/core";
-import { IonicPage, ModalController } from "ionic-angular";
+import { IonicPage, ModalController, LoadingController, NavController } from "ionic-angular";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
+import { AlertProvider } from '../../../providers/alert';
+import { tattoReqProvider } from '../../../providers/api/tattoReq';
 
 
 @IonicPage()
@@ -12,7 +15,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class RegisterOrdersPage {
 
 
-  formRegisterOrder:FormGroup
+  formRegisterOrder: FormGroup
   typeDocument: any = [
     {
       name: 'C.C - Cedula',
@@ -27,14 +30,33 @@ export class RegisterOrdersPage {
   kidsAndAdult: number
 
   constructor(
-    public modalCtrl:ModalController,
-    public formBuilder:FormBuilder
+    public modalCtrl: ModalController,
+    public formBuilder: FormBuilder,
+    private alertCtrl: AlertProvider,
+    private httpApi: tattoReqProvider,
+    public loading: LoadingController,
+    public navCtrl: NavController,
 
   ) {
     this.formRegisterOrder = this.formBuilder.group({
-      checkTermns: [false, Validators.required]
+      nameClient: [''],
+      lastNameClient: [''],
+      address: [''],
+      email: [''],
+      type_document: [''],
+      document: [''],
+      phone: [''],
+      age: [''],
+      numberSession: [''],
+      priceTatto: [''],
+      deposit: [''],
+      nameTutor: [''],
+      lastNameTutor: [''],
+      phoneTutor: [''],
+      checkTermns: [false, Validators.required],
+
     })
-   }
+  }
 
   ionViewDidLoad() {
     this.kidsAndAdult = 0
@@ -42,7 +64,7 @@ export class RegisterOrdersPage {
 
 
   ionChangeCheck($event) {
-    if ($event === 'Cedula') {
+    if ($event === 'Tareta de identidad') {
       this.kidsAndAdult = 1
     } else {
       this.kidsAndAdult = 0
@@ -56,6 +78,32 @@ export class RegisterOrdersPage {
       modal.present();
     } else {
       this.check = this.formRegisterOrder.controls['checkTermns'].value
+    }
+  }
+
+  async createOrder() {
+    const loading = this.loading.create({ content: 'Creando...' })
+    const params = {
+      orderWork: this.formRegisterOrder.value
+    }
+    if (this.formRegisterOrder.controls['checkTermns'].value) {
+      loading.present();
+      const createOrder = await this.httpApi.createRegisterOrder(params)
+      if (createOrder) {
+        if (createOrder['data'] && createOrder['data']['code'] === 201) {
+          loading.dismiss()
+          this.navCtrl.setRoot('OrdersPage')
+        } else {
+          loading.dismiss()
+          console.error('Error', createOrder)
+        }
+      } else {
+        loading.dismiss()
+        console.error(createOrder)
+      }
+      console.log(JSON.stringify(createOrder))
+    } else {
+      this.alertCtrl.showAlert(null, 'Debe aceptar los terminos y condiciones', 'Cerrar')
     }
   }
 

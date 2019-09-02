@@ -15,70 +15,77 @@
             <ion-col col-6>
               <ion-item class="item-form">
                 <ion-label floating>Nombre </ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input formControlName="nameClient" type="text"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-6>
               <ion-item class="item-form">
                 <ion-label floating>Apellido</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input formControlName="lastNameClient" type="text"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-12>
               <ion-item class="item-form">
                 <ion-label floating>Direccion</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input formControlName="address" type="text"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-12>
               <ion-item class="item-form">
                 <ion-label floating>Correo</ion-label>
-                <ion-input type="email"></ion-input>
+                <ion-input formControlName="email" type="email"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col col-12>
               <ion-item class="item-form">
                 <ion-label floating>Tipo de documento</ion-label>
-                <ion-select (ionChange)="ionChangeCheck($event)">
+                <ion-select (ionChange)="ionChangeCheck($event)" formControlName="type_document">
                   <ion-option *ngFor="let item of typeDocument" [value]='item.value'>{{ item.name }}</ion-option>
                 </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col col-12>
+              <ion-item class="item-form">
+                <ion-label floating># Documento</ion-label>
+                <ion-input type="number" formControlName="document"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-6>
               <ion-item class="item-form">
                 <ion-label floating>Telefono</ion-label>
-                <ion-input type="number"></ion-input>
+                <ion-input type="number" formControlName="phone"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-6>
               <ion-item class="item-form">
                 <ion-label floating>Edad</ion-label>
-                <ion-input type="number"></ion-input>
+                <ion-input type="number" formControlName="age"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-6>
               <ion-item class="item-form">
                 <ion-label floating># de sesion</ion-label>
-                <ion-input type="number"></ion-input>
+                <ion-input  formControlName="numberSession" type="number"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-6>
               <ion-item class="item-form">
                 <ion-label floating>Precio</ion-label>
-                <ion-input type="number"></ion-input>
+                <ion-input type="number" formControlName="priceTatto"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col col-12>
               <ion-item class="item-form">
                 <ion-label floating>Deposito</ion-label>
-                <ion-input type="number"></ion-input>
+                <ion-input type="number" formControlName="deposit"></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -89,21 +96,21 @@
               <ion-col col-12>
                 <ion-item class="item-form">
                   <ion-label floating>Nombre padre (tutor o responsable) </ion-label>
-                  <ion-input type="text"></ion-input>
+                  <ion-input type="text" formControlName="nameTutor"></ion-input>
                 </ion-item>
               </ion-col>
 
               <ion-col col-12>
                 <ion-item class="item-form">
                   <ion-label floating>Apellido padre (tutor o responsable) </ion-label>
-                  <ion-input type="text"></ion-input>
+                  <ion-input type="text" formControlName="lastNameTutor"></ion-input>
                 </ion-item>
               </ion-col>
 
               <ion-col col-12>
                 <ion-item class="item-form">
                   <ion-label floating>Telefono</ion-label>
-                  <ion-input type="number"></ion-input>
+                  <ion-input type="number" formControlName="phoneTutor"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -115,13 +122,14 @@
     <ion-list>
       <ion-item class="item-terms">
         <ion-label>Aceptar terminos y condiciones</ion-label>
-        <ion-checkbox formControlName="checkTermns" (ionChange)="termsAndCondition()" [checked]="check"></ion-checkbox>
+        <ion-checkbox color="dark" formControlName="checkTermns" (ionChange)="termsAndCondition()" [checked]="check">
+        </ion-checkbox>
       </ion-item>
     </ion-list>
   </form>
 </ion-content>
 <ion-footer>
-  <button margin-top ion-button color="dark" full>
+  <button margin-top ion-button color="dark" (click)="createOrder()" full>
     Registrar Orden de trabajo
   </button>
 </ion-footer>

@@ -9,7 +9,8 @@ const prod = {
       POST: {
         auth: "v1/auth/login",
         register: "v1/auth/register",
-        forgotPassword: "v1/auth/sendForgotPassword/"
+        forgotPassword: "v1/auth/sendForgotPassword/",
+        registerOrder: "v1/auth/createOrderWork",
       },
       GET: {
         getValidEmail: "v1/auth/validEmail",

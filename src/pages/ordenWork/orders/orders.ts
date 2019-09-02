@@ -22,6 +22,16 @@ export class OrdersPage {
     this.getOrdersTatto();
   }
 
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+      this.getOrdersTatto()
+    }, 2000);
+  }
+
   async getOrdersTatto() {
     const load = this.loading.create({})
     load.present();

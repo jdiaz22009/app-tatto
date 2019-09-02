@@ -7,6 +7,12 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="content">
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="circles" refreshingText="Cargando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <section class="section-orders">
     <ion-list *ngFor="let item of tattoArreglo">
       <ion-item class="back-list">
