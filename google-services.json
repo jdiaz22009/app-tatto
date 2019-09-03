@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "601953913227",
+    "firebase_url": "https://tattooya-1c5a0.firebaseio.com",
+    "project_id": "tattooya-1c5a0",
+    "storage_bucket": "tattooya-1c5a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601953913227:android:de18fae8afa65307",
+        "android_client_info": {
+          "package_name": "co.tattoya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601953913227-sgrc05l530k7nca5hkvaggp8qlrmt73g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0FFv3oY_eviqtkF0XBn7VDoqVGpIW4wI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601953913227-sgrc05l530k7nca5hkvaggp8qlrmt73g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

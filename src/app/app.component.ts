@@ -6,6 +6,11 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { AlertProvider } from "../providers/alert";
 import { StorageDB } from "../providers/storageDB";
 import { NetworkProvider } from "../providers/network";
+
+import { FIREBASE_CONFIG } from './app.firebase.config';
+import * as firebase from 'firebase';
+
+
 @Component({
   templateUrl: "app.html"
 })
@@ -41,6 +46,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       // this.statusBar.styleDefault();
+      firebase.initializeApp(FIREBASE_CONFIG)
       this.statusBar.backgroundColorByHexString("#0000");
       this.splashScreen.hide();
     });
