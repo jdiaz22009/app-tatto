@@ -19,15 +19,22 @@ export class FirebaseProvider {
   }
 
 
-  uploadPicture(data, id, name) {
-
-    const imgRef = this.storage.ref(`tattoo/${id}/${name}`)
+  uploadPicture(data, id) {
+    const imgRef = this.storage.ref(`tattoo/gallery/${id}`)
     return new Promise((resolve, reject) => {
       const task = imgRef.putString(data, 'base64', { contentType: 'image/jpg' })
       task.on(
         'state_changed',
         snapshot => {
-          const percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100
+          const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }
           console.log(percentage)
         },
         error => {
@@ -40,8 +47,36 @@ export class FirebaseProvider {
         }
       )
     })
-
   }
 
+  async saveImageProfilePath(mode, data, userId) {
+    let reference = `tattoo`
+    switch (mode) {
+      case 0:
+        reference += `/gallery/${userId}`
+        break;
+    }
 
+    return await this.database.ref(reference).set(data)
+  }
+
+  getProfilePicture(mode, userId) {
+
+    let reference = `tattoo`
+    switch (mode) {
+      case 0:
+        reference += `/gallery/${userId}`
+        break;
+    }
+
+    const imgRef = this.database.ref(reference)
+    return new Promise((resolve, reject) => {
+      imgRef.once('value', (snap) => {
+        console.log(snap.val(), 'snap de Picture')
+        resolve(snap.val())
+      }, (e) => {
+        reject(e)
+      })
+    })
+  }
 }

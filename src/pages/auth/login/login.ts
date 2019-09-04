@@ -112,6 +112,7 @@ export class LoginPage {
             );
           } else {
             this.dbStorage.setItem("token", res["data"]["token"]);
+            this.dbStorage.setItem('users', res['data']['findUser'])
             this.navctrl.setRoot("OrdersPage");
           }
         } else if(res.data["code"] === 400) {

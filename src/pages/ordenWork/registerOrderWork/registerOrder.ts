@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AlertProvider } from '../../../providers/alert';
 import { tattoReqProvider } from '../../../providers/api/tattoReq';
 import { MediaProvider } from '../../../providers/media';
+import { StorageDB } from '../../../providers/storageDB';
+import { FirebaseProvider } from '../../../providers/firebase';
 
 
 @IonicPage()
@@ -32,6 +34,13 @@ export class RegisterOrdersPage {
   check: boolean = false;
   kidsAndAdult: number
 
+  objImg = [
+    { name: 'startImgTatto' },
+    { name: 'endImgTatto' },
+  ]
+
+  pictureMode: number = 0
+
   constructor(
     public modalCtrl: ModalController,
     public formBuilder: FormBuilder,
@@ -40,7 +49,9 @@ export class RegisterOrdersPage {
     public loading: LoadingController,
     public navCtrl: NavController,
     public actionSheetCtrl: ActionSheetController,
-    public mediaProvider: MediaProvider
+    public mediaProvider: MediaProvider,
+    public storageDB: StorageDB,
+    public fire: FirebaseProvider
   ) {
     this.formRegisterOrder = this.formBuilder.group({
       nameClient: [''],
@@ -75,6 +86,33 @@ export class RegisterOrdersPage {
     }
   }
 
+  async getUserId() {
+    return await this.storageDB.getItem('users')
+  }
+
+
+  async getProfilePicture() {
+    const loader = this.loading.create({})
+    loader.present()
+    const userId = await this.getUserId()
+
+    this.fire.getProfilePicture(this.pictureMode, userId['_id']).then(res => {
+
+      if (res !== null) {
+        this.objImg.map(picture => {
+          if (res[picture.name] !== undefined && res[picture.name].includes('http')) {
+            this[picture.name] = res[picture.name]
+          }
+        })
+      }
+      loader.dismiss()
+    }).catch(e => {
+      loader.dismiss()
+      console.error('error ' + e)
+    })
+  }
+
+
   setPicture(id) {
     const actionSheet = this.actionSheetCtrl.create({
       title: 'Subir foto',
@@ -98,7 +136,7 @@ export class RegisterOrdersPage {
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked')
-          }
+          } 
         }
       ]
     })
@@ -107,14 +145,12 @@ export class RegisterOrdersPage {
 
   takePicture(modelPicture, mode) {
     this.mediaProvider.takePicture(mode).then(res => {
+      this[modelPicture] = res
       console.log(res)
     }).catch(e => {
       console.error(e)
     })
   }
-
-
-
 
   termsAndCondition() {
     console.log('check', this.formRegisterOrder.controls['checkTermns'].value)
