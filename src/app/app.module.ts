@@ -6,6 +6,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { IonicStorageModule } from "@ionic/storage";
 import { Network } from "@ionic-native/network";
 import { Keyboard } from '@ionic-native/keyboard';
+import { Camera } from '@ionic-native/camera'
 
 import { MyApp } from "./app.component";
 import { HomePage } from "../pages/home/home";
@@ -29,6 +30,7 @@ import { API_MODULE } from "../providers/api/index";
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Keyboard,
     Network,
+    Camera,
     PROVIDERS_MODULE,
     API_MODULE,
   ]

@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { IonicPage, ModalController, LoadingController, NavController } from "ionic-angular";
+import { IonicPage, ModalController, LoadingController, NavController, ActionSheetController } from "ionic-angular";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { AlertProvider } from '../../../providers/alert';
 import { tattoReqProvider } from '../../../providers/api/tattoReq';
+import { MediaProvider } from '../../../providers/media';
 
 
 @IonicPage()
@@ -14,7 +15,9 @@ import { tattoReqProvider } from '../../../providers/api/tattoReq';
 })
 export class RegisterOrdersPage {
 
-
+  notImg: string = 'assets/imgs/notimg.png'
+  startImgTatto: string = this.notImg
+  endImgTatto: string = this.notImg
   formRegisterOrder: FormGroup
   typeDocument: any = [
     {
@@ -36,7 +39,8 @@ export class RegisterOrdersPage {
     private httpApi: tattoReqProvider,
     public loading: LoadingController,
     public navCtrl: NavController,
-
+    public actionSheetCtrl: ActionSheetController,
+    public mediaProvider: MediaProvider
   ) {
     this.formRegisterOrder = this.formBuilder.group({
       nameClient: [''],
@@ -71,6 +75,47 @@ export class RegisterOrdersPage {
     }
   }
 
+  setPicture(id) {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Subir foto',
+      buttons: [
+        {
+          text: 'Tomar Foto',
+          role: 'takePicture',
+          handler: () => {
+            this.takePicture(id, 1)
+          }
+        },
+        {
+          text: 'Seleccionar de Galería',
+          role: 'takePicture',
+          handler: () => {
+            this.takePicture(id, 0)
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked')
+          }
+        }
+      ]
+    })
+    actionSheet.present()
+  }
+
+  takePicture(modelPicture, mode) {
+    this.mediaProvider.takePicture(mode).then(res => {
+      console.log(res)
+    }).catch(e => {
+      console.error(e)
+    })
+  }
+
+
+
+
   termsAndCondition() {
     console.log('check', this.formRegisterOrder.controls['checkTermns'].value)
     if (this.formRegisterOrder.controls['checkTermns'].value) {
@@ -84,7 +129,8 @@ export class RegisterOrdersPage {
   async createOrder() {
     const loading = this.loading.create({ content: 'Creando...' })
     const params = {
-      orderWork: this.formRegisterOrder.value
+      orderWork: this.formRegisterOrder.value,
+      checkTermns: this.formRegisterOrder.controls['checkTermns']
     }
     if (this.formRegisterOrder.controls['checkTermns'].value) {
       loading.present();

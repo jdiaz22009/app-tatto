@@ -72,7 +72,7 @@
             <ion-col col-6>
               <ion-item class="item-form">
                 <ion-label floating># de sesion</ion-label>
-                <ion-input  formControlName="numberSession" type="number"></ion-input>
+                <ion-input formControlName="numberSession" type="number"></ion-input>
               </ion-item>
             </ion-col>
 
@@ -119,6 +119,24 @@
       </ion-list>
     </section>
 
+    <section class="card-background-page">
+      <ion-grid>
+        <ion-row justify-content-center>
+          <ion-col col-12>
+            <p class="textP">Toma una foto de diseño inicial</p>
+            <ion-card>
+              <img [src]="startImgTatto" (click)="setPicture('startTatto')"/>
+            </ion-card>
+          </ion-col>
+          <!-- <ion-col col-6>
+            <p class="textP">Img tatto fin</p>
+            <ion-card>
+              <img [src]="endImgTatto" />
+            </ion-card>
+          </ion-col> -->
+        </ion-row>
+      </ion-grid>
+    </section>
     <ion-list>
       <ion-item class="item-terms">
         <ion-label>Aceptar terminos y condiciones</ion-label>
@@ -130,6 +148,6 @@
 </ion-content>
 <ion-footer>
   <button margin-top ion-button color="dark" (click)="createOrder()" full>
-    Registrar Orden de trabajo
+    REGISTRAR ORDEN DE TRABAJO
   </button>
 </ion-footer>

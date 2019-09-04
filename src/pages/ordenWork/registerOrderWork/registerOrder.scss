@@ -1,17 +1,49 @@
-page-Registerorder{
-  .content{
-    background: url('../../../assets/imgs/auth.jpg') no-repeat;
+page-Registerorder {
+  .content {
+    background: url("../../../assets/imgs/auth.jpg") no-repeat;
   }
 
-  .item-form{
+  .item-form {
     border-radius: 8px;
   }
-  
-  .item-terms{
+
+  .item-terms {
     border: none;
     background: no-repeat;
     color: #ffffff;
     font-weight: bold;
   }
 
+  .card-background-page {
+    ion-card {
+      position: relative;
+      text-align: center;
+      border-radius: 3vh;
+    }
+
+    .card-title {
+      position: absolute;
+      top: 40%;
+      font-size: 2em;
+      width: 100%;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .card-subtitle {
+      font-size: 1em;
+      position: absolute;
+      top: 52%;
+      width: 100%;
+      color: #fff;
+    }
+  }
+
+  .textP {
+    color: #fff;
+    font-size: 3vh;
+    text-align: center;
+    font-weight: bold;
+    margin: auto;
+  }
 }
