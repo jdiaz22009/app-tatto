@@ -19,8 +19,8 @@ export class FirebaseProvider {
   }
 
 
-  uploadPicture(data, id) {
-    const imgRef = this.storage.ref(`tattoo/gallery/${id}`)
+  uploadPicture(data, id, name) {
+    const imgRef = this.storage.ref(`tattoo/gallery/${id}/${name}`)
     return new Promise((resolve, reject) => {
       const task = imgRef.putString(data, 'base64', { contentType: 'image/jpg' })
       task.on(
@@ -47,17 +47,6 @@ export class FirebaseProvider {
         }
       )
     })
-  }
-
-  async saveImageProfilePath(mode, data, userId) {
-    let reference = `tattoo`
-    switch (mode) {
-      case 0:
-        reference += `/gallery/${userId}`
-        break;
-    }
-
-    return await this.database.ref(reference).set(data)
   }
 
   getProfilePicture(mode, userId) {

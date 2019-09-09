@@ -3,7 +3,7 @@ export const FIREBASE_CONFIG = {
   authDomain: "tattooya-1c5a0.firebaseapp.com",
   databaseURL: "https://tattooya-1c5a0.firebaseio.com",
   projectId: "tattooya-1c5a0",
-  storageBucket: "",
+  storageBucket: "tattooya-1c5a0.appspot.com",
   messagingSenderId: "601953913227",
   appId: "1:601953913227:web:28d054fed4917938"
 }

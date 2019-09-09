@@ -91,26 +91,26 @@ export class RegisterOrdersPage {
   }
 
 
-  async getProfilePicture() {
-    const loader = this.loading.create({})
-    loader.present()
-    const userId = await this.getUserId()
+  // async getProfilePicture() {
+  //   const loader = this.loading.create({})
+  //   loader.present()
+  //   const userId = await this.getUserId()
 
-    this.fire.getProfilePicture(this.pictureMode, userId['_id']).then(res => {
+  //   this.fire.getProfilePicture(this.pictureMode, userId['_id']).then(res => {
 
-      if (res !== null) {
-        this.objImg.map(picture => {
-          if (res[picture.name] !== undefined && res[picture.name].includes('http')) {
-            this[picture.name] = res[picture.name]
-          }
-        })
-      }
-      loader.dismiss()
-    }).catch(e => {
-      loader.dismiss()
-      console.error('error ' + e)
-    })
-  }
+  //     if (res !== null) {
+  //       this.objImg.map(picture => {
+  //         if (res[picture.name] !== undefined && res[picture.name].includes('http')) {
+  //           this[picture.name] = res[picture.name]
+  //         }
+  //       })
+  //     }
+  //     loader.dismiss()
+  //   }).catch(e => {
+  //     loader.dismiss()
+  //     console.error('error ' + e)
+  //   })
+  // }
 
 
   setPicture(id) {
@@ -136,12 +136,21 @@ export class RegisterOrdersPage {
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked')
-          } 
+          }
         }
       ]
     })
     actionSheet.present()
   }
+
+  isBase64Img(str) {
+    try {
+      return str.includes('data:image/jpeg;base64')
+    } catch (e) {
+      return false
+    }
+  }
+
 
   takePicture(modelPicture, mode) {
     this.mediaProvider.takePicture(mode).then(res => {
@@ -163,27 +172,63 @@ export class RegisterOrdersPage {
   }
 
   async createOrder() {
-    const loading = this.loading.create({ content: 'Creando...' })
+
+    const userId = await this.getUserId()
+
+    let arrayImgs = []
+
+    let dataArray = {}
+
+    const loading = this.loading.create({ content: 'Creando orden...' })
     const params = {
       orderWork: this.formRegisterOrder.value,
-      checkTermns: this.formRegisterOrder.controls['checkTermns']
+      checkTermns: this.formRegisterOrder.controls['checkTermns'].value
     }
+
+    console.log('params', JSON.stringify(params))
     if (this.formRegisterOrder.controls['checkTermns'].value) {
       loading.present();
-      const createOrder = await this.httpApi.createRegisterOrder(params)
-      if (createOrder) {
-        if (createOrder['data'] && createOrder['data']['code'] === 201) {
-          loading.dismiss()
-          this.navCtrl.setRoot('OrdersPage')
+      try {
+        const createOrder = await this.httpApi.createRegisterOrder(params)
+        if (createOrder) {
+          if (createOrder['data'] && createOrder['data']['code'] === 201) {
+            this.objImg.map(obj => {
+              if (this[obj.name] != this.notImg && this.isBase64Img(this[obj.name])) {
+                arrayImgs.push({ model: this[obj.name], id: userId['_id'], name: obj.name })
+              } else {
+                dataArray[obj.name] = this[obj.name] === this.notImg ? null : this[obj.name]
+              }
+            })
+            const results = arrayImgs.map(obj => {
+              const img = obj.model.substring(23)
+              return this.fire.uploadPicture(img, obj.id, obj.name).then(res => {
+                return dataArray[obj.name] = res
+              }).catch(e => {
+                console.error('error upload ' + e.message)
+                loading.dismiss()
+                this.alertCtrl.showAlert('Error', 'Ha ocurrido un problema al subir la imagen, por favor intente de nuevo', 'Cerrar')
+              })
+            })
+            Promise.all(results).then(completed => {
+              console.log('completed ' + completed)
+              loading.dismiss()
+              this.navCtrl.setRoot('OrdersPage')
+            })
+
+          } else {
+            loading.dismiss()
+            console.error('Error', createOrder)
+          }
         } else {
           loading.dismiss()
-          console.error('Error', createOrder)
+          console.error(createOrder)
         }
-      } else {
+        console.log(JSON.stringify(createOrder))
+      } catch (error) {
+        console.error(error)
         loading.dismiss()
-        console.error(createOrder)
+        this.alertCtrl.showAlert(null, 'Error al crear la orden', 'Cerrar')
       }
-      console.log(JSON.stringify(createOrder))
     } else {
       this.alertCtrl.showAlert(null, 'Debe aceptar los terminos y condiciones', 'Cerrar')
     }
