@@ -41,9 +41,9 @@ export class authTattoProvider {
 
   async login(login) {
     const url = this.apiUrl + this.postLoginPath;
-    const header = { headers: { "content-type": "application/json" } };
+    const headers =  { "content-type": "application/json" };
     try {
-      return await this.apiRest.requestHttp("POST", url, login, header);
+      return await this.apiRest.requestHttp("POST", url, login, headers);
     } catch (e) {
       throw e;
     }
