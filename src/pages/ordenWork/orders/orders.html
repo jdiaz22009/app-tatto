@@ -23,7 +23,7 @@
         <h2>Cliente:{{ item.nameClient }}</h2>
         <p class="p">Edad: {{ item.age }}</p>
         <p class="p">Precio: ${{ item.priceTatto }}</p>
-        <button ion-button clear item-end>View</button>
+        <button ion-button clear item-end (click)="viewOrder(item)">Abrir</button>
       </ion-item>
     </ion-list>
   </section>

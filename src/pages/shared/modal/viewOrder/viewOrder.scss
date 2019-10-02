@@ -1,0 +1,26 @@
+app-modal-view {
+  // .content {
+  //   background: url("../../../../assets/imgs/auth.jpg") no-repeat;
+  // }
+
+  .required {
+    color: red;
+    margin-left: 5%;
+  }
+
+  .item-form {
+    border-radius: 2vh;
+  }
+
+  .img-separator {
+    height: 17vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: -6vh;
+  }
+
+  .section-tattoo {
+    margin-top: -12vh;
+  }
+}

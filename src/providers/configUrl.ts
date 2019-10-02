@@ -1,5 +1,5 @@
-//  const env = "prod";
-const env = "dev";
+ const env = "prod";
+// const env = "dev";
 const prod = {
   environment: 'prod',
   api: {

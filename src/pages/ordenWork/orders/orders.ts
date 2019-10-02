@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, LoadingController, NavController } from "ionic-angular";
+import { IonicPage, LoadingController, NavController, ModalController } from "ionic-angular";
 
 import { tattoReqProvider } from "../../../providers/api/tattoReq";
 import { AlertProvider } from '../../../providers/alert';
@@ -11,11 +11,13 @@ import { AlertProvider } from '../../../providers/alert';
 })
 export class OrdersPage {
   tattoArreglo: any;
+  userTatto:any
   constructor(
     public tattoReq: tattoReqProvider,
     public loading: LoadingController,
     public alertCtrl: AlertProvider,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public modalCtrl:ModalController
   ) { }
 
   ionViewDidLoad() {
@@ -40,17 +42,20 @@ export class OrdersPage {
       if (getOrders !== null && getOrders !== undefined) {
         if (getOrders["data"]["code"] === 200) {
           load.dismiss()
-          const orders = getOrders["data"]["findOrder"]["orderWork"];
+          const userTatto = []
           const arreglo = [];
+          const orders = getOrders["data"]["findOrder"]["orderWork"];
+          const user = getOrders["data"]["findOrder"]['id_user'];
+          this.userTatto = user
+          userTatto.push(user)
           for (let i = 0; i < orders.length; i++) {
             const order = orders[i];
             if (order["state"]) {
-              console.log(order)
               arreglo.push(order);
             }
           }
           this.tattoArreglo = arreglo;
-        }else if( getOrders["data"]["code"] === 404){
+        } else if (getOrders["data"]["code"] === 404) {
           load.dismiss()
           this.alertCtrl.showAlert(null, 'No hay ordenes registrada', 'Cerrar')
         }
@@ -65,5 +70,17 @@ export class OrdersPage {
 
   nextCreateOrder() {
     this.navCtrl.push('RegisterOrdersPage')
+  }
+
+
+  viewOrder(order) {
+    console.log(JSON.stringify(order), 'order',JSON.stringify(this.userTatto))
+    const view = {
+      order,
+      user: this.userTatto
+    }
+   const modal =  this.modalCtrl.create('ViewOrder', view)
+   modal.present()
+
   }
 }
