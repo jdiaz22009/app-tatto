@@ -23,7 +23,6 @@ export class ViewOrder {
   order: any
   user: any
   flagOrder: boolean = false
-  flagUser: boolean = false
   constructor(
     public viewCtrl: ViewController,
     public loading: LoadingController,
@@ -53,19 +52,32 @@ export class ViewOrder {
     this.empetyFormValid(this.order, this.user)
   }
 
-  empetyFormValid(order, usser) {
-    console.log(order, this.formView.controls['name'].valid)
-    if (this.formView.controls['name'].valid && this.formView.controls['last_name'].valid && this.formView.controls['email'].valid && this.formView.controls['phone'].valid && this.formView.controls['celPhone'].valid) {
+  empetyFormValid(order, user) {
+    console.log(this.formView2.controls['nameTatto'].valid, 'valid')
+    if (this.formView.controls['name'].valid && this.formView.controls['last_name'].valid && this.formView.controls['email'].valid && this.formView.controls['phone'].valid && this.formView.controls['celPhone'].valid || this.formView2.controls['nameTatto'].valid && this.formView2.controls['nameStore'].valid) {
       this.formView.controls['name'].setValue(order['nameClient'])
       this.formView.controls['last_name'].setValue(order['lastNameClient'])
       this.formView.controls['email'].setValue(order['email'])
       this.formView.controls['phone'].setValue(order['phone'])
       this.formView.controls['celPhone'].setValue(order['celPhone'] ? order['celPhone'] : 0)
+      this.formView2.controls['nameTatto'].setValue(user['name'])
+      this.formView2.controls['nameStore'].setValue(user['store'] !== '' ? user['store'] : 'No pertenece a ninguna tienda')
       this.flagOrder = true
     }
+  }
 
 
+  update() {
+    if (this.flagOrder) {
+      this.flagOrder = false
+      
+    }
+  }
 
+  cancel() {
+    if (!this.flagOrder) {
+      this.flagOrder = true
+    }
   }
 
 

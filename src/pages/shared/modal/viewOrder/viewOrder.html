@@ -28,21 +28,21 @@
             <ion-col col-6>
               <ion-item>
                 <ion-label floating>Apellido</ion-label>
-                <ion-input type="text" formControlName="last_name" [disabled]="flagOrder" ></ion-input>
+                <ion-input type="text" formControlName="last_name" [disabled]="flagOrder"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-12>
               <ion-item>
                 <ion-label floating>Correo Cliente</ion-label>
-                <ion-input type="text" formControlName="email" [disabled]="flagOrder" ></ion-input>
+                <ion-input type="text" formControlName="email" [disabled]="flagOrder"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-6>
               <ion-item>
                 <ion-label floating>Telefono</ion-label>
-                <ion-input type="text" formControlName="phone" [disabled]="flagOrder" ></ion-input>
+                <ion-input type="text" formControlName="phone" [disabled]="flagOrder"></ion-input>
               </ion-item>
             </ion-col>
 
@@ -70,14 +70,14 @@
             <ion-col col-12>
               <ion-item>
                 <ion-label floating>Nombre Artista</ion-label>
-                <ion-input type="text" formControlName="nameTatto"></ion-input>
+                <ion-input type="text" formControlName="nameTatto" [disabled]="flagOrder"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col col-12>
               <ion-item>
                 <ion-label floating>Nombre tienda</ion-label>
-                <ion-input type="text" formControlName="nameStore"></ion-input>
+                <ion-input type="text" formControlName="nameStore" [disabled]="flagOrder"></ion-input>
               </ion-item>
             </ion-col>
 
@@ -97,4 +97,30 @@
       </ion-list>
     </form>
   </section>
+
+
+  <section class="btn-modal">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <button margin-top ion-button color="dark" full (click)="update()" *ngIf="flagOrder"  >
+            EDITAR
+          </button>
+          <button margin-top ion-button color="dark" full *ngIf="!flagOrder">
+            ACTUALIZAR
+          </button>
+
+
+        </ion-col>
+
+        <ion-col col-6>
+          <button margin-top ion-button color="dark" full (click)="cancel()">
+            CANCELAR
+          </button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </section>
+
 </ion-content>
