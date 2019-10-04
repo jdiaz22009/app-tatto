@@ -9,6 +9,7 @@ import {
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+import { tattoReqProvider } from '../../../../providers/api/tattoReq';
 
 @IonicPage()
 @Component({
@@ -28,7 +29,8 @@ export class ViewOrder {
     public loading: LoadingController,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public apiRest:tattoReqProvider,
   ) {
 
     this.formView = this.formBuilder.group({
@@ -70,7 +72,7 @@ export class ViewOrder {
   update() {
     if (this.flagOrder) {
       this.flagOrder = false
-      
+
     }
   }
 
@@ -79,6 +81,7 @@ export class ViewOrder {
       this.flagOrder = true
     }
   }
+
 
 
   close() {

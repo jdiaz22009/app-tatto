@@ -1,5 +1,5 @@
- const env = "prod";
-// const env = "dev";
+//  const env = "prod";
+const env = "dev";
 const prod = {
   environment: 'prod',
   api: {
@@ -11,6 +11,7 @@ const prod = {
         register: "v1/auth/register",
         forgotPassword: "v1/auth/sendForgotPassword/",
         registerOrder: "v1/auth/createOrderWork",
+        orderViewUpdate: "/v1/auth/updateViewOrder"
       },
       GET: {
         getValidEmail: "v1/auth/validEmail",
@@ -30,6 +31,7 @@ const dev = {
         register: "v1/auth/register",
         forgotPassword: "v1/auth/sendForgotPassword/",
         registerOrder: "v1/auth/createOrderWork",
+        orderViewUpdate: "/v1/auth/updateViewOrder"
       },
       GET: {
         getValidEmail: "v1/auth/validEmail",
