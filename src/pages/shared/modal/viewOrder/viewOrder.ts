@@ -10,6 +10,7 @@ import {
 import { FormGroup, FormBuilder } from "@angular/forms";
 
 import { tattoReqProvider } from "../../../../providers/api/tattoReq";
+import { AlertProvider } from "../../../../providers/alert";
 
 @IonicPage()
 @Component({
@@ -30,7 +31,8 @@ export class ViewOrder {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public apiRest: tattoReqProvider
+    public apiRest: tattoReqProvider,
+    public alertCtrl: AlertProvider
   ) {
     this.formView = this.formBuilder.group({
       nameClient: [""],
@@ -97,19 +99,26 @@ export class ViewOrder {
   }
 
   async updateOrder() {
+    const loading = this.loading.create({ content: "Actualizando..." });
+    loading.present();
     const params = {
       document: this.formView.controls["document"].value,
       nameClient: this.formView.controls["nameClient"].value,
       lastNameClient: this.formView.controls["lastNameClient"].value,
       email: this.formView.controls["email"].value,
-      phone: this.formView.controls["phone"].value
+      phone: this.formView.controls["phone"].value,
+      skup_order: this.order["skup_order"]
     };
-
-    console.log("body", params);
-
     try {
-      const update = await this.apiRest.orderViewUpdat(JSON.stringify(params));
+      const update = await this.apiRest.orderViewUpdat(params);
       console.log(update, "update");
+      if (update && update["data"]["code"] === 200) {
+        loading.dismiss();
+        this.navCtrl.pop()
+      } else {
+        loading.dismiss();
+        this.alertCtrl.showAlert(null, "Hubo un error", "Cerrar");
+      }
     } catch (error) {
       console.error(error, "error");
     }
