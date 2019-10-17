@@ -1,7 +1,7 @@
-//  const env = "prod";
-const env = "dev";
+const env = "prod";
+// const env = "dev";
 const prod = {
-  environment: 'prod',
+  environment: "prod",
   api: {
     url: "https://tatto-practica.herokuapp.com/api/",
     secret_token: "D4TAP4R4L0G1N04UTH",
@@ -21,7 +21,7 @@ const prod = {
   }
 };
 const dev = {
-  environment: 'dev',
+  environment: "dev",
   api: {
     url: "http://localhost:3001/api/",
     secret_token: "D4TAP4R4L0G1N04UTH",
