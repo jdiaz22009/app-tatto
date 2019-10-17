@@ -11,6 +11,8 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 
 import { tattoReqProvider } from "../../../../providers/api/tattoReq";
 import { AlertProvider } from "../../../../providers/alert";
+import { FirebaseProvider } from "../../../../providers/firebase";
+import { StorageDB } from "../../../../providers/storageDB";
 
 @IonicPage()
 @Component({
@@ -32,7 +34,9 @@ export class ViewOrder {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public apiRest: tattoReqProvider,
-    public alertCtrl: AlertProvider
+    public alertCtrl: AlertProvider,
+    public fire: FirebaseProvider,
+    public storageDB: StorageDB
   ) {
     this.formView = this.formBuilder.group({
       nameClient: [""],
@@ -54,10 +58,10 @@ export class ViewOrder {
     this.order = this.navParams.get("order");
     this.user = this.navParams.get("user");
     this.empetyFormValid(this.order, this.user);
+    this.getProfilePicture();
   }
 
   empetyFormValid(order, user) {
-    console.log(this.formView2.controls["nameTatto"].valid, "valid");
     if (
       (this.formView.controls["nameClient"].valid &&
         this.formView.controls["lastNameClient"].valid &&
@@ -98,6 +102,28 @@ export class ViewOrder {
     }
   }
 
+  async getUserId() {
+    return await this.storageDB.getItem("users");
+  }
+  async getProfilePicture() {
+    const loader = this.loading.create({});
+    loader.present();
+    const userId = await this.getUserId();
+    console.log(userId["_id"], 'id')
+    this.fire
+      .getProfilePicture(1, userId["_id"])
+      .then(res => {
+        if (res !== null) {
+          console.log("res", res);
+        }
+        loader.dismiss();
+      })
+      .catch(e => {
+        loader.dismiss();
+        console.error("error " + e);
+      });
+  }
+
   async updateOrder() {
     const loading = this.loading.create({ content: "Actualizando..." });
     loading.present();
@@ -114,7 +140,7 @@ export class ViewOrder {
       console.log(update, "update");
       if (update && update["data"]["code"] === 200) {
         loading.dismiss();
-        this.navCtrl.pop()
+        this.navCtrl.pop();
       } else {
         loading.dismiss();
         this.alertCtrl.showAlert(null, "Hubo un error", "Cerrar");

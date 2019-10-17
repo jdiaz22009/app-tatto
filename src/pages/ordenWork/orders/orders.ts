@@ -86,6 +86,9 @@ export class OrdersPage {
       user: this.userTatto
     };
     const modal = this.modalCtrl.create("ViewOrder", view);
+    modal.onDidDismiss(() =>{
+      this.getOrdersTatto()
+    })
     modal.present();
   }
 }
