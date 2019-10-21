@@ -174,6 +174,7 @@ export class RegisterOrdersPage {
     const userId = await this.getUserId();
     let arrayImgs = [];
     let dataArray = {};
+
     const loading = this.loading.create({ content: "Creando orden..." });
     const params = {
       orderWork: this.formRegisterOrder.value,
@@ -218,6 +219,32 @@ export class RegisterOrdersPage {
                   );
                 });
             });
+
+            if (arrayImgs.length > 0) {
+              const loa = this.loading.create({
+                content: "Subiendo imagen..."
+              });
+              loa.present();
+              this.fire
+                .savePicture(0, arrayImgs, userId)
+                .then(() => {
+                  loa.dismiss();
+                  this.alertCtrl.showAlert(
+                    "Exito",
+                    "La Foto ha sido guardado correctamente",
+                    "Cerrar"
+                  );
+                })
+                .catch(e => {
+                  console.error("Error en:", e);
+                  loa.dismiss();
+                  this.alertCtrl.showAlert(
+                    "Error",
+                    "Ha ocurrido un problema, por favor intente de nuevo",
+                    "Cerrar"
+                  );
+                });
+            }
             Promise.all(results).then(completed => {
               console.log("completed " + completed);
               loading.dismiss();

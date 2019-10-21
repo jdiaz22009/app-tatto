@@ -109,9 +109,8 @@ export class ViewOrder {
     const loader = this.loading.create({});
     loader.present();
     const userId = await this.getUserId();
-    console.log(userId["_id"], 'id')
     this.fire
-      .getProfilePicture(1, userId["_id"])
+      .getProfilePicture(0, userId["_id"])
       .then(res => {
         if (res !== null) {
           console.log("res", res);

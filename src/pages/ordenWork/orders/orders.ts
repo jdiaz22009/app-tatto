@@ -58,7 +58,7 @@ export class OrdersPage {
               arreglo.push(order);
             }
           }
-          this.tattoArreglo = arreglo;
+          this.tattoArreglo = arreglo.reverse();
         } else if (getOrders["data"]["code"] === 404) {
           load.dismiss();
           this.alertCtrl.showAlert(null, "No hay ordenes registrada", "Cerrar");
@@ -80,15 +80,14 @@ export class OrdersPage {
   }
 
   viewOrder(order) {
-    console.log(JSON.stringify(order), "order", JSON.stringify(this.userTatto));
     const view = {
       order,
       user: this.userTatto
     };
     const modal = this.modalCtrl.create("ViewOrder", view);
-    modal.onDidDismiss(() =>{
-      this.getOrdersTatto()
-    })
+    modal.onDidDismiss(() => {
+      this.getOrdersTatto();
+    });
     modal.present();
   }
 }
