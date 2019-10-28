@@ -168,6 +168,25 @@ export class RegisterOrdersPage {
           if (createOrder["data"] && createOrder["data"]["code"] === 201) {
             const valid = this.validOrderFirebase(createOrder["data"]);
             console.log(valid, "valid");
+            this.objImg.map(obj => {
+              if (
+                this[obj.name] != this.notImg &&
+                this.isBase64Img(this[obj.name])
+              ) {
+                arrayImgs.push({
+                  model: this[obj.name],
+                  id: userId["_id"],
+                  name: obj.name,
+                  id_order: createOrder["data"]["createOrder"]
+                    ? createOrder["data"]["createOrder"]["_id"]
+                    : createOrder["data"]["updateOrder"]["_id"]
+                });
+              } else {
+                dataArray[obj.name] =
+                  this[obj.name] === this.notImg ? null : this[obj.name];
+              }
+            });
+
             const results = arrayImgs.map(obj => {
               const img = obj.model.substring(23);
               return this.fire
@@ -239,39 +258,18 @@ export class RegisterOrdersPage {
   }
 
   validOrderFirebase(data) {
-
-    // this.objImg.map(obj => {
-    //   if (
-    //     this[obj.name] != this.notImg &&
-    //     this.isBase64Img(this[obj.name])
-    //   ) {
-    //     arrayImgs.push({
-    //       model: this[obj.name],
-    //       id: userId["_id"],
-    //       name: obj.name,
-    //       id_order: createOrder["data"]["createOrder"]
-    //         ? createOrder["data"]["createOrder"]["_id"]
-    //         : createOrder["data"]["updateOrder"]["_id"]
-    //     });
-    //   } else {
-    //     dataArray[obj.name] =
-    //       this[obj.name] === this.notImg ? null : this[obj.name];
-    //   }
-    // });
-
-
-
     return new Promise((resolve, reject) => {
       const datas = data["createOrder"]
         ? data["createOrder"]
         : data["updateOrder"];
       let orderSub = null;
       if (datas["orderWork"].length > 0) {
-        for (let item of datas["orderWork"]) {
-
-
+        datas["orderWork"].map((item, index) => {
+          console.log(index, "index index", item, "item item");
+        });
+        if (orderSub !== null) {
+          console.log(orderSub);
         }
-
       } else {
         reject(0);
       }
