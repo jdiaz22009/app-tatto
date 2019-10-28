@@ -239,6 +239,28 @@ export class RegisterOrdersPage {
   }
 
   validOrderFirebase(data) {
+
+    // this.objImg.map(obj => {
+    //   if (
+    //     this[obj.name] != this.notImg &&
+    //     this.isBase64Img(this[obj.name])
+    //   ) {
+    //     arrayImgs.push({
+    //       model: this[obj.name],
+    //       id: userId["_id"],
+    //       name: obj.name,
+    //       id_order: createOrder["data"]["createOrder"]
+    //         ? createOrder["data"]["createOrder"]["_id"]
+    //         : createOrder["data"]["updateOrder"]["_id"]
+    //     });
+    //   } else {
+    //     dataArray[obj.name] =
+    //       this[obj.name] === this.notImg ? null : this[obj.name];
+    //   }
+    // });
+
+
+
     return new Promise((resolve, reject) => {
       const datas = data["createOrder"]
         ? data["createOrder"]
