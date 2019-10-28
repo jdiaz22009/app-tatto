@@ -14,6 +14,7 @@ import { tattoReqProvider } from "../../../providers/api/tattoReq";
 import { MediaProvider } from "../../../providers/media";
 import { StorageDB } from "../../../providers/storageDB";
 import { FirebaseProvider } from "../../../providers/firebase";
+import { rejects } from "assert";
 
 @IonicPage()
 @Component({
@@ -89,27 +90,6 @@ export class RegisterOrdersPage {
     return await this.storageDB.getItem("users");
   }
 
-  // async getProfilePicture() {
-  //   const loader = this.loading.create({})
-  //   loader.present()
-  //   const userId = await this.getUserId()
-
-  //   this.fire.getProfilePicture(this.pictureMode, userId['_id']).then(res => {
-
-  //     if (res !== null) {
-  //       this.objImg.map(picture => {
-  //         if (res[picture.name] !== undefined && res[picture.name].includes('http')) {
-  //           this[picture.name] = res[picture.name]
-  //         }
-  //       })
-  //     }
-  //     loader.dismiss()
-  //   }).catch(e => {
-  //     loader.dismiss()
-  //     console.error('error ' + e)
-  //   })
-  // }
-
   setPicture(id) {
     const actionSheet = this.actionSheetCtrl.create({
       title: "Subir foto",
@@ -174,7 +154,6 @@ export class RegisterOrdersPage {
     const userId = await this.getUserId();
     let arrayImgs = [];
     let dataArray = {};
-
     const loading = this.loading.create({ content: "Creando orden..." });
     const params = {
       orderWork: this.formRegisterOrder.value,
@@ -187,6 +166,8 @@ export class RegisterOrdersPage {
         const createOrder = await this.httpApi.createRegisterOrder(params);
         if (createOrder) {
           if (createOrder["data"] && createOrder["data"]["code"] === 201) {
+            const valid = this.validOrderFirebase(createOrder["data"]);
+            console.log(valid, "valid");
             this.objImg.map(obj => {
               if (
                 this[obj.name] != this.notImg &&
@@ -195,17 +176,21 @@ export class RegisterOrdersPage {
                 arrayImgs.push({
                   model: this[obj.name],
                   id: userId["_id"],
-                  name: obj.name
+                  name: obj.name,
+                  id_order: createOrder["data"]["createOrder"]
+                    ? createOrder["data"]["createOrder"]["_id"]
+                    : createOrder["data"]["updateOrder"]["_id"]
                 });
               } else {
                 dataArray[obj.name] =
                   this[obj.name] === this.notImg ? null : this[obj.name];
               }
             });
+
             const results = arrayImgs.map(obj => {
               const img = obj.model.substring(23);
               return this.fire
-                .uploadPicture(img, obj.id, obj.name)
+                .uploadPicture(img, obj)
                 .then(res => {
                   return (dataArray[obj.name] = res);
                 })
@@ -226,7 +211,7 @@ export class RegisterOrdersPage {
               });
               loa.present();
               this.fire
-                .savePicture(0, arrayImgs, userId)
+                .savePicture(0, arrayImgs, userId["_id"])
                 .then(() => {
                   loa.dismiss();
                   this.alertCtrl.showAlert(
@@ -258,7 +243,6 @@ export class RegisterOrdersPage {
           loading.dismiss();
           console.error(createOrder);
         }
-        console.log(JSON.stringify(createOrder));
       } catch (error) {
         console.error(error);
         loading.dismiss();
@@ -271,5 +255,24 @@ export class RegisterOrdersPage {
         "Cerrar"
       );
     }
+  }
+
+  validOrderFirebase(data) {
+    return new Promise((resolve, reject) => {
+      const datas = data["createOrder"]
+        ? data["createOrder"]
+        : data["updateOrder"];
+      let orderSub = null;
+      if (datas["orderWork"].length > 0) {
+        datas["orderWork"].map((item, index) => {
+          console.log(index, "index index", item, "item item");
+        });
+        if (orderSub !== null) {
+          console.log(orderSub);
+        }
+      } else {
+        reject(0);
+      }
+    });
   }
 }
