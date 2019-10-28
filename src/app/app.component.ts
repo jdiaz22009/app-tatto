@@ -25,7 +25,7 @@ export class MyApp {
   defaultimg: string = "../assets/imgs/photoDefautlProfile.png";
   alertNetwork: any = null;
   user: any = null;
-  data:any = {}
+  data: any = {};
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
@@ -51,9 +51,8 @@ export class MyApp {
       this.statusBar.backgroundColorByHexString("#0000");
       this.splashScreen.hide();
       this.user = await this.getUser();
-      this.data['name'] = this.user['name']
-      this.data['last_name'] =  this.user['last_name']
-      console.log(this.data, this.user)
+      this.data["name"] = this.user["name"];
+      this.data["last_name"] = this.user["last_name"];
     });
   }
   menuItem() {

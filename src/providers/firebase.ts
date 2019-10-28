@@ -15,8 +15,10 @@ export class FirebaseProvider {
     this.storage = firebase.storage();
   }
 
-  uploadPicture(data, id, name) {
-    const imgRef = this.storage.ref(`tattoo/gallery/${id}/${name}`);
+  uploadPicture(data, obj) {
+    const imgRef = this.storage.ref(
+      `tattoo/gallery/${obj["id"]}/${obj["id_order"]}/${obj["id_sub_id"]}/${obj["name"]}`
+    );
     return new Promise((resolve, reject) => {
       const task = imgRef.putString(data, "base64", {
         contentType: "image/jpg"
@@ -49,6 +51,7 @@ export class FirebaseProvider {
   }
 
   async savePicture(mode, data, id) {
+    console.log(id, "id tatto");
     let reference = "tattoo";
     switch (mode) {
       case 0:
