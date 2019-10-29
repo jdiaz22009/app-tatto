@@ -17,7 +17,7 @@ export class FirebaseProvider {
 
   uploadPicture(data, obj) {
     const imgRef = this.storage.ref(
-      `tattoo/gallery/${obj["id"]}/${obj["id_order"]}/${obj["id_sub_id"]}/${obj["name"]}`
+      `tattoo/gallery/${obj["id"]}/${obj["id_order"]}/${obj["name"]}`
     );
     return new Promise((resolve, reject) => {
       const task = imgRef.putString(data, "base64", {
