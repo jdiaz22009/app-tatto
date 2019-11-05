@@ -1,5 +1,5 @@
-const env = "prod";
-// const env = "dev";
+// const env = "prod";
+const env = "dev";
 const prod = {
   environment: "prod",
   api: {
@@ -15,7 +15,8 @@ const prod = {
       },
       GET: {
         getValidEmail: "v1/auth/validEmail",
-        getOrdersTatto: "v1/auth/getOrderWork"
+        getOrdersTatto: "v1/auth/getOrderWork",
+        getGuide: "v1/auth/getGuide"
       }
     }
   }
@@ -35,7 +36,8 @@ const dev = {
       },
       GET: {
         getValidEmail: "v1/auth/validEmail",
-        getOrdersTatto: "v1/auth/getOrderWork"
+        getOrdersTatto: "v1/auth/getOrderWork",
+        getGuide: "v1/auth/getGuide"
       }
     }
   }
