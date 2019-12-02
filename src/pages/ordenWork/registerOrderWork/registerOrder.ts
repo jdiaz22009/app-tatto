@@ -75,7 +75,6 @@ export class RegisterOrdersPage {
 
   ionViewDidLoad() {
     this.kidsAndAdult = 0;
-    this.prueba();
   }
 
   ionChangeCheck($event) {
@@ -166,7 +165,37 @@ export class RegisterOrdersPage {
         const createOrder = await this.httpApi.createRegisterOrder(params);
         if (createOrder) {
           if (createOrder["data"] && createOrder["data"]["code"] === 201) {
-            this.objImg.map(obj => {
+          
+          } else {
+            loading.dismiss();
+            console.error("Error", createOrder);
+          }
+        } else {
+          loading.dismiss();
+          console.error(createOrder);
+        }
+      } catch (error) {
+        console.error(error);
+        loading.dismiss();
+        this.alertCtrl.showAlert(null, "Error al crear la orden", "Cerrar");
+      }
+    } else {
+      this.alertCtrl.showAlert(
+        null,
+        "Debe aceptar los terminos y condiciones",
+        "Cerrar"
+      );
+    }
+  }
+
+  
+  
+  /*
+    async prueba() {
+      const userId = await this.getUserId();
+      await this.fire.getProfilePicture(0, userId["_id"]);
+    }
+     this.objImg.map(obj => {
               if (
                 this[obj.name] != this.notImg &&
                 this.isBase64Img(this[obj.name])
@@ -233,49 +262,5 @@ export class RegisterOrdersPage {
               modalC.present();
               this.navCtrl.setRoot("OrdersPage");
             });
-          } else {
-            loading.dismiss();
-            console.error("Error", createOrder);
-          }
-        } else {
-          loading.dismiss();
-          console.error(createOrder);
-        }
-      } catch (error) {
-        console.error(error);
-        loading.dismiss();
-        this.alertCtrl.showAlert(null, "Error al crear la orden", "Cerrar");
-      }
-    } else {
-      this.alertCtrl.showAlert(
-        null,
-        "Debe aceptar los terminos y condiciones",
-        "Cerrar"
-      );
-    }
-  }
-
-  validOrderFirebase(data) {
-    return new Promise((resolve, reject) => {
-      const datas = data["createOrder"]
-        ? data["createOrder"]
-        : data["updateOrder"];
-      let orderSub = null;
-      if (datas["orderWork"].length > 0) {
-        datas["orderWork"].map((item, index) => {
-          console.log(index, "index index", item, "item item");
-        });
-        if (orderSub !== null) {
-          console.log(orderSub);
-        }
-      } else {
-        reject(0);
-      }
-    });
-  }
-
-  async prueba() {
-    const userId = await this.getUserId();
-    await this.fire.getProfilePicture(0, userId["_id"]);
-  }
+   */ 
 }
