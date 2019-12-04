@@ -114,6 +114,7 @@ export class ViewOrder {
       .then(res => {
         if (res !== null) {
           console.log("res", res)
+
         }
         //loader.dismiss();
       })
