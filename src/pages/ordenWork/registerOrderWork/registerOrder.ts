@@ -165,7 +165,71 @@ export class RegisterOrdersPage {
         const createOrder = await this.httpApi.createRegisterOrder(params);
         if (createOrder) {
           if (createOrder["data"] && createOrder["data"]["code"] === 201) {
-          
+            this.objImg.map(obj => {
+              if (
+                this[obj.name] != this.notImg &&
+                this.isBase64Img(this[obj.name])
+              ) {
+                arrayImgs.push({
+                  model: this[obj.name],
+                  id: userId["_id"],
+                  name: obj.name,
+                  id_order: createOrder["data"]["createOrder"]["_id"]
+                });
+              } else {
+                dataArray[obj.name] =
+                  this[obj.name] === this.notImg ? null : this[obj.name];
+              }
+            });
+            const results = arrayImgs.map(obj => {
+              const img = obj.model.substring(23);
+              return this.fire
+                .uploadPicture(img, obj)
+                .then(res => {
+                  return (dataArray[obj.name] = res);
+                })
+                .catch(e => {
+                  console.error("error upload " + e.message);
+                  loading.dismiss();
+                  this.alertCtrl.showAlert(
+                    "Error",
+                    "Ha ocurrido un problema al subir la imagen, por favor intente de nuevo",
+                    "Cerrar"
+                  );
+                });
+            });
+            if (arrayImgs.length > 0) {
+              const loa = this.loading.create({
+                content: "Subiendo imagen..."
+              });
+              loa.present();
+              this.fire
+                .savePicture(0, arrayImgs, userId["_id"])
+                .then(() => {
+                  loa.dismiss();
+                  this.alertCtrl.showAlert(
+                    "Exito",
+                    "La Foto ha sido guardado correctamente",
+                    "Cerrar"
+                  );
+                })
+                .catch(e => {
+                  console.error("Error en:", e);
+                  loa.dismiss();
+                  this.alertCtrl.showAlert(
+                    "Error",
+                    "Ha ocurrido un problema, por favor intente de nuevo",
+                    "Cerrar"
+                  );
+                });
+            }
+            Promise.all(results).then(completed => {
+              console.log("completed " + completed);
+              loading.dismiss();
+              const modalC = this.modalCtrl.create("SlidesPages");
+              modalC.present();
+              this.navCtrl.setRoot("OrdersPage");
+            });
           } else {
             loading.dismiss();
             console.error("Error", createOrder);
@@ -188,8 +252,6 @@ export class RegisterOrdersPage {
     }
   }
 
-  
-  
   /*
     async prueba() {
       const userId = await this.getUserId();
@@ -262,5 +324,5 @@ export class RegisterOrdersPage {
               modalC.present();
               this.navCtrl.setRoot("OrdersPage");
             });
-   */ 
+   */
 }

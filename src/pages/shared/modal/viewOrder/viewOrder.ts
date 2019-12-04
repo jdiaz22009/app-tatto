@@ -107,15 +107,15 @@ export class ViewOrder {
   }
   async getProfilePicture() {
     const loader = this.loading.create({});
-    loader.present();
+    //loader.present();
     const userId = await this.getUserId();
     this.fire
       .getProfilePicture(0, userId["_id"])
       .then(res => {
         if (res !== null) {
-          console.log("res", res);
+          console.log("res", res)
         }
-        loader.dismiss();
+        //loader.dismiss();
       })
       .catch(e => {
         loader.dismiss();
