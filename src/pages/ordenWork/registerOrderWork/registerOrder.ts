@@ -181,6 +181,7 @@ export class RegisterOrdersPage {
                   this[obj.name] === this.notImg ? null : this[obj.name];
               }
             });
+            
             const results = arrayImgs.map(obj => {
               const img = obj.model.substring(23);
               return this.fire

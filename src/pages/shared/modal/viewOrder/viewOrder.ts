@@ -4,6 +4,7 @@ import {
   NavController,
   ViewController,
   LoadingController,
+  ActionSheetController,
   NavParams
 } from 'ionic-angular';
 
@@ -13,6 +14,7 @@ import { tattoReqProvider } from '../../../../providers/api/tattoReq';
 import { AlertProvider } from '../../../../providers/alert';
 import { FirebaseProvider } from '../../../../providers/firebase';
 import { StorageDB } from '../../../../providers/storageDB';
+import { MediaProvider } from '../../../../providers/media';
 
 @IonicPage()
 @Component({
@@ -25,9 +27,10 @@ export class ViewOrder {
   formView2: FormGroup;
   notPhoto: string = './assets/imgs/notimg.png';
   startImgTatto: string = this.notPhoto;
+  endImgTatto: string = this.notPhoto;
   order: any;
   user: any;
-  pictureObj: any = [{ name: 'startImgTatto' }];
+  pictureObj: any = [{ name: 'startImgTatto' }, { name: 'endImgTatto' }];
   flagOrder: boolean = false;
   constructor(
     public viewCtrl: ViewController,
@@ -38,7 +41,9 @@ export class ViewOrder {
     public apiRest: tattoReqProvider,
     public alertCtrl: AlertProvider,
     public fire: FirebaseProvider,
-    public storageDB: StorageDB
+    public actionSheetCtrl: ActionSheetController,
+    public storageDB: StorageDB,
+    public mediaProvider: MediaProvider
   ) {
     this.formView = this.formBuilder.group({
       nameClient: [''],
@@ -136,6 +141,9 @@ export class ViewOrder {
   async updateOrder() {
     const loading = this.loading.create({ content: 'Actualizando...' });
     loading.present();
+    let arrayImgs = [];
+    let dataArray = {};
+    const userId = await this.getUserId();
     const params = {
       document: this.formView.controls['document'].value,
       nameClient: this.formView.controls['nameClient'].value,
@@ -148,8 +156,77 @@ export class ViewOrder {
       const update = await this.apiRest.orderViewUpdat(params);
       console.log(update, 'update');
       if (update && update['data']['code'] === 200) {
-        loading.dismiss();
-        this.navCtrl.pop();
+        this.pictureObj.map(obj => {
+          if (
+            this[obj.name] != this.notPhoto &&
+            this.isBase64Img(this[obj.name])
+          ) {
+            arrayImgs.push({
+              model: this[obj.name],
+              id: userId['_id'],
+              name: obj.name,
+              id_order: update['data']['upOrder']['_id']
+            });
+          } else {
+            dataArray[obj.name] =
+              this[obj.name] === this.notPhoto ? null : this[obj.name];
+          }
+        });
+
+        const results = arrayImgs.map(obj => {
+          const img = obj.model.substring(23);
+          return this.fire
+            .uploadPicture(img, obj)
+            .then(res => {
+              dataArray = {
+                model: obj.name,
+                id: obj.id,
+                name: obj.name
+              };
+              return (dataArray[obj.name] = res);
+            })
+            .catch(e => {
+              console.error('error upload ' + e.message);
+              loading.dismiss();
+              this.alertCtrl.showAlert(
+                'Error',
+                'Ha ocurrido un problema al subir la imagen, por favor intente de nuevo',
+                'Cerrar'
+              );
+            });
+        });
+
+        if (arrayImgs.length > 0) {
+          const loa = this.loading.create({
+            content: 'Subiendo imagen...'
+          });
+          loa.present();
+          this.fire
+            .savePicture(0, dataArray, userId['_id'])
+            .then(() => {
+              loa.dismiss();
+              this.alertCtrl.showAlert(
+                'Exito',
+                'La Foto ha sido guardado correctamente',
+                'Cerrar'
+              );
+            })
+            .catch(e => {
+              console.error('Error en:', e);
+              loa.dismiss();
+              this.alertCtrl.showAlert(
+                'Error',
+                'Ha ocurrido un problema, por favor intente de nuevo',
+                'Cerrar'
+              );
+            });
+        }
+
+        Promise.all(results).then(completed => {
+          console.log('completed ' + completed);
+          loading.dismiss();
+          this.navCtrl.pop();
+        });
       } else {
         loading.dismiss();
         this.alertCtrl.showAlert(null, 'Hubo un error', 'Cerrar');
@@ -157,6 +234,56 @@ export class ViewOrder {
     } catch (error) {
       console.error(error, 'error');
     }
+  }
+
+  setPicture(id) {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Subir foto',
+      buttons: [
+        {
+          text: 'Tomar Foto',
+          role: 'takePicture',
+          handler: () => {
+            this.takePicture(id, 1);
+          }
+        },
+        {
+          text: 'Seleccionar de Galería',
+          role: 'takePicture',
+          handler: () => {
+            this.takePicture(id, 0);
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+  isBase64Img(str) {
+    try {
+      return str.includes('data:image/jpeg;base64');
+    } catch (e) {
+      return false;
+    }
+  }
+
+  takePicture(modelPicture, mode) {
+    this.mediaProvider
+      .takePicture(mode)
+      .then(res => {
+        this[modelPicture] = res;
+        console.log(res);
+      })
+      .catch(e => {
+        console.error(e);
+      });
   }
 
   close() {

@@ -108,7 +108,7 @@ export class MyApp {
           if (res === 1) {
             this.storageDb.deleteDB();
             this.nav.setRoot(page.component);
-            this.network.disconnectSubscription();
+           // this.network.disconnectSubscription();
           } else {
             this.nav.setRoot("OrdersPage");
           }

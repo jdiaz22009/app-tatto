@@ -121,6 +121,12 @@ export class LoginPage {
             "Correo y contraseña son incorrectos",
             "Cerrar"
           )
+        }else if(res.data["code"] === 300){
+          this.alertP.showAlert(
+            null,
+            "Esta cuenta no existe por favor verifique",
+            "Cerrar"
+          )
         }
       })
       .catch(e => {
