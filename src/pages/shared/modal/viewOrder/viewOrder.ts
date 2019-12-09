@@ -1,31 +1,33 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 import {
   IonicPage,
   NavController,
   ViewController,
   LoadingController,
   NavParams
-} from "ionic-angular";
+} from 'ionic-angular';
 
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { tattoReqProvider } from "../../../../providers/api/tattoReq";
-import { AlertProvider } from "../../../../providers/alert";
-import { FirebaseProvider } from "../../../../providers/firebase";
-import { StorageDB } from "../../../../providers/storageDB";
+import { tattoReqProvider } from '../../../../providers/api/tattoReq';
+import { AlertProvider } from '../../../../providers/alert';
+import { FirebaseProvider } from '../../../../providers/firebase';
+import { StorageDB } from '../../../../providers/storageDB';
 
 @IonicPage()
 @Component({
-  selector: "app-modal-view",
-  templateUrl: "viewOrder.html"
+  selector: 'app-modal-view',
+  templateUrl: 'viewOrder.html'
 })
 export class ViewOrder {
   emailValidator = /^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
   formView: FormGroup;
   formView2: FormGroup;
-  notPhoto: string = "assets/imgs/notimg.png";
+  notPhoto: string = './assets/imgs/notimg.png';
+  startImgTatto: string = this.notPhoto;
   order: any;
   user: any;
+  pictureObj: any = [{ name: 'startImgTatto' }];
   flagOrder: boolean = false;
   constructor(
     public viewCtrl: ViewController,
@@ -39,52 +41,52 @@ export class ViewOrder {
     public storageDB: StorageDB
   ) {
     this.formView = this.formBuilder.group({
-      nameClient: [""],
-      lastNameClient: [""],
-      email: [""],
-      phone: [""],
-      celPhone: [""],
+      nameClient: [''],
+      lastNameClient: [''],
+      email: [''],
+      phone: [''],
+      celPhone: [''],
       document: [0],
       skup_order: [0]
     });
 
     this.formView2 = this.formBuilder.group({
-      nameTatto: [""],
-      nameStore: [""]
+      nameTatto: [''],
+      nameStore: ['']
     });
   }
 
   ionViewDidLoad() {
-    this.order = this.navParams.get("order");
-    this.user = this.navParams.get("user");
+    this.order = this.navParams.get('order');
+    this.user = this.navParams.get('user');
     this.empetyFormValid(this.order, this.user);
     this.getProfilePicture();
   }
 
   empetyFormValid(order, user) {
     if (
-      (this.formView.controls["nameClient"].valid &&
-        this.formView.controls["lastNameClient"].valid &&
-        this.formView.controls["email"].valid &&
-        this.formView.controls["phone"].valid &&
-        this.formView.controls["celPhone"].valid) ||
-      (this.formView2.controls["nameTatto"].valid &&
-        this.formView2.controls["nameStore"].valid)
+      (this.formView.controls['nameClient'].valid &&
+        this.formView.controls['lastNameClient'].valid &&
+        this.formView.controls['email'].valid &&
+        this.formView.controls['phone'].valid &&
+        this.formView.controls['celPhone'].valid) ||
+      (this.formView2.controls['nameTatto'].valid &&
+        this.formView2.controls['nameStore'].valid)
     ) {
-      this.formView.controls["skup_order"].setValue(order["skup_order"]);
-      this.formView.controls["nameClient"].setValue(order["nameClient"]);
-      this.formView.controls["lastNameClient"].setValue(
-        order["lastNameClient"]
+      this.formView.controls['skup_order'].setValue(order['skup_order']);
+      this.formView.controls['nameClient'].setValue(order['nameClient']);
+      this.formView.controls['lastNameClient'].setValue(
+        order['lastNameClient']
       );
-      this.formView.controls["email"].setValue(order["email"]);
-      this.formView.controls["phone"].setValue(order["phone"]);
-      this.formView.controls["celPhone"].setValue(
-        order["celPhone"] ? order["celPhone"] : 0
+      this.formView.controls['email'].setValue(order['email']);
+      this.formView.controls['phone'].setValue(order['phone']);
+      this.formView.controls['celPhone'].setValue(
+        order['celPhone'] ? order['celPhone'] : 0
       );
-      this.formView.controls["document"].setValue(order["document"]);
-      this.formView2.controls["nameTatto"].setValue(user["name"]);
-      this.formView2.controls["nameStore"].setValue(
-        user["store"] !== "" ? user["store"] : "No pertenece a ninguna tienda"
+      this.formView.controls['document'].setValue(order['document']);
+      this.formView2.controls['nameTatto'].setValue(user['name']);
+      this.formView2.controls['nameStore'].setValue(
+        user['store'] !== '' ? user['store'] : 'No pertenece a ninguna tienda'
       );
       this.flagOrder = true;
     }
@@ -103,50 +105,57 @@ export class ViewOrder {
   }
 
   async getUserId() {
-    return await this.storageDB.getItem("users");
+    return await this.storageDB.getItem('users');
   }
   async getProfilePicture() {
     const loader = this.loading.create({});
-    //loader.present();
+    loader.present();
     const userId = await this.getUserId();
     this.fire
-      .getProfilePicture(0, userId["_id"])
+      .getProfilePicture(0, userId['_id'])
       .then(res => {
         if (res !== null) {
-          console.log("res", res)
-
+          console.log('res', res);
+          this.pictureObj.map(picture => {
+            if (
+              res[picture.name] !== undefined &&
+              res[picture.name].includes('http')
+            ) {
+              this[picture.name] = res[picture.name];
+            }
+          });
         }
-        //loader.dismiss();
+        loader.dismiss();
       })
       .catch(e => {
         loader.dismiss();
-        console.error("error " + e);
+        console.error('error ' + e);
       });
   }
 
   async updateOrder() {
-    const loading = this.loading.create({ content: "Actualizando..." });
+    const loading = this.loading.create({ content: 'Actualizando...' });
     loading.present();
     const params = {
-      document: this.formView.controls["document"].value,
-      nameClient: this.formView.controls["nameClient"].value,
-      lastNameClient: this.formView.controls["lastNameClient"].value,
-      email: this.formView.controls["email"].value,
-      phone: this.formView.controls["phone"].value,
-      skup_order: this.order["skup_order"]
+      document: this.formView.controls['document'].value,
+      nameClient: this.formView.controls['nameClient'].value,
+      lastNameClient: this.formView.controls['lastNameClient'].value,
+      email: this.formView.controls['email'].value,
+      phone: this.formView.controls['phone'].value,
+      skup_order: this.order['skup_order']
     };
     try {
       const update = await this.apiRest.orderViewUpdat(params);
-      console.log(update, "update");
-      if (update && update["data"]["code"] === 200) {
+      console.log(update, 'update');
+      if (update && update['data']['code'] === 200) {
         loading.dismiss();
         this.navCtrl.pop();
       } else {
         loading.dismiss();
-        this.alertCtrl.showAlert(null, "Hubo un error", "Cerrar");
+        this.alertCtrl.showAlert(null, 'Hubo un error', 'Cerrar');
       }
     } catch (error) {
-      console.error(error, "error");
+      console.error(error, 'error');
     }
   }
 

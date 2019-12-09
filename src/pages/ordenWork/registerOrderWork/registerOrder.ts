@@ -186,6 +186,12 @@ export class RegisterOrdersPage {
               return this.fire
                 .uploadPicture(img, obj)
                 .then(res => {
+                   dataArray = {
+                    model: obj.name,
+                    id: obj.id,
+                    name: obj.name
+
+                  }
                   return (dataArray[obj.name] = res);
                 })
                 .catch(e => {
@@ -204,7 +210,7 @@ export class RegisterOrdersPage {
               });
               loa.present();
               this.fire
-                .savePicture(0, arrayImgs, userId["_id"])
+                .savePicture(0, dataArray, userId["_id"])
                 .then(() => {
                   loa.dismiss();
                   this.alertCtrl.showAlert(

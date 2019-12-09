@@ -21,7 +21,7 @@
             <ion-col col-12>
               <ion-item>
                 <ion-label floating># Skup</ion-label>
-                 <ion-input type="text" formControlName="skup_order" disabled="true"></ion-input>
+                <ion-input type="text" formControlName="skup_order" disabled="true"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col col-12>
@@ -95,7 +95,7 @@
 
             <ion-col col-6>
               <div>
-                <img [src]="notPhoto" alt="imgNophoto">
+                <img [src]="startImgTatto" alt="imgNophoto">
               </div>
             </ion-col>
 
@@ -115,7 +115,7 @@
     <ion-grid>
       <ion-row>
         <ion-col col-6>
-          <button margin-top ion-button color="dark" full (click)="update()" *ngIf="flagOrder"  >
+          <button margin-top ion-button color="dark" full (click)="update()" *ngIf="flagOrder">
             EDITAR
           </button>
           <button margin-top ion-button color="dark" full *ngIf="!flagOrder" (click)="updateOrder()">
